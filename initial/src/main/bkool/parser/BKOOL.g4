@@ -68,7 +68,7 @@ memAccessee: memAccessee DOT ID
 atom: THIS | ID | literal | newee | arrayLit;
 newee: NEW ID LB argLits? RB;
 literal: INTLIT | FLOATLIT | STRINGLIT | booleanLit;
-booleanLit: 'true' | 'false';
+booleanLit: TRUE | FALSE;
 argLits: exp (CM exp)*;
 
 

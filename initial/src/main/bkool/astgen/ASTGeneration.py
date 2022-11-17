@@ -272,17 +272,50 @@ class ASTGeneration(BKOOLVisitor):
     def visitNewee(self, ctx:BKOOLParser.NeweeContext):
         # newee: NEW ID LB argLits? RB;
         return NewExpr(ID(ctx.ID().getText()),
-                       )
+                       ctx.argLits().accept(self) if ctx.argLits() else [])
+        
+    def visitBooleanLit(self, ctx:BKOOLParser.BooleanLitContext): 
+        # booleanLit: TRUE | FALSE;
+        return bool(True) if ctx.TRUE() else bool(False)
 
-
-
-
-    """
-
-literal: INTLIT | FLOATLIT | STRINGLIT | booleanLit;
-booleanLit: 'true' | 'false';
-argLits: exp (CM exp)*;
-
-    """
-
+    def visitArgLits(self, ctx:BKOOLParser.ArgLitsContext):
+        # argLits: exp (CM exp)*;
+        result = []
+        result.append(ctx.exp(0).accept(self))
+        if ctx.CM():
+            size = len(ctx.CM())
+            for i in range(1, size + 1):
+                result.append(ctx.exp(i).accept(self))
+            return result
     
+    def visitStmt(self, ctx:BKOOLParser.StmtContext):
+        # stmt: blockStmt | asmStmt | ifStmt | forStmt | breakStmt | continueStmt | returnStmt | atrbDecl | invokeStmt;
+        if ctx.blockStmt():
+            return ctx.blockStmt().accept(self)
+        elif ctx.asmStmt():
+            return ctx.asmStmt().accept(self)
+        elif ctx.ifStmt():
+            return ctx.ifStmt().accept(self)
+        elif ctx.forStmt():
+            return ctx.forStmt().accept(self)
+        elif ctx.breakStmt():
+            return ctx.breakStmt().accept(self)
+        elif ctx.continueStmt():
+            return ctx.continueStmt().accept(self)
+        elif ctx.returnStmt():
+            return ctx.returnStmt().accept(self)
+        elif ctx.atrbDecl():
+            return ctx.atrbDecl().accept(self)
+        else:
+            return ctx.invokeStmt().accept(self)
+
+    # def visitBlockStmt(self, ctx:BKOOLParser.BlockStmtContext):
+    # blockStmt: LP (FINAL? typ (atrbInit (CM atrbInit)*) SM)* nullAbleStmtList? RP;
+    # return Block()
+
+"""
+   blockStmt: LP (FINAL? typ (atrbInit (CM atrbInit)*) SM)* nullAbleStmtList? RP;
+nullAbleStmtList: stmt+;
+"""
+
+
