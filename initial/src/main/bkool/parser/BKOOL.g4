@@ -95,8 +95,8 @@ stmt: blockStmt
 
 // 6.1.block statement
 // blockStmt: LP (FINAL? atrb SM)* nullAbleStmtList? RP;
-blockStmt: LP (FINAL? typ (atrbInit (CM atrbInit)*) SM)* nullAbleStmtList? RP;
-nullAbleStmtList: stmt+;
+blockStmt: LP nullAbleVarDecl* stmt* RP;
+nullAbleVarDecl: FINAL? typ atrbInit (CM atrbInit)* SM;
 
 // 6.2.assignment statement
 asmStmt: lhs ASSIGN exp SM;

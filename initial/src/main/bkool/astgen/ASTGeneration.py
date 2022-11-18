@@ -309,12 +309,20 @@ class ASTGeneration(BKOOLVisitor):
         else:
             return ctx.invokeStmt().accept(self)
 
-    # def visitBlockStmt(self, ctx:BKOOLParser.BlockStmtContext):
-    # blockStmt: LP (FINAL? typ (atrbInit (CM atrbInit)*) SM)* nullAbleStmtList? RP;
-    # return Block()
+    def visitBlockStmt(self, ctx:BKOOLParser.BlockStmtContext):
+        # blockStmt: LP nullAbleVarDecl* stmt* RP;
+        return Block([self.visit(x) for x in ctx.nullAbleVarDecl()],
+                     [self.visit(y) for y in ctx.stmt()])
+        
+    def visitNullAbleVarDecl(self, ctx:BKOOLParser.NullAbleVarDeclContext):
+        # nullAbleVarDecl: FINAL? typ atrbInit (CM atrbInit)* SM;
+        if ctx.FINAL():
+            return immu
+
+
 
 """
-   blockStmt: LP (FINAL? typ (atrbInit (CM atrbInit)*) SM)* nullAbleStmtList? RP;
+nullAbleVarDecl: FINAL? typ atrbInit (CM atrbInit)* SM;
 nullAbleStmtList: stmt+;
 """
 

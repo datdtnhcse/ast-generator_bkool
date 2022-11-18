@@ -399,13 +399,13 @@ public class BKOOLBaseListener implements BKOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNullAbleStmtList(BKOOLParser.NullAbleStmtListContext ctx) { }
+	@Override public void enterNullAbleVarDecl(BKOOLParser.NullAbleVarDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNullAbleStmtList(BKOOLParser.NullAbleStmtListContext ctx) { }
+	@Override public void exitNullAbleVarDecl(BKOOLParser.NullAbleVarDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

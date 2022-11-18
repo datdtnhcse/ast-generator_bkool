@@ -33,7 +33,7 @@ public class BKOOLParser extends Parser {
 		RULE_conCatee = 20, RULE_notee = 21, RULE_subAddee = 22, RULE_indexee = 23, 
 		RULE_memAccessee = 24, RULE_atom = 25, RULE_newee = 26, RULE_literal = 27, 
 		RULE_booleanLit = 28, RULE_argLits = 29, RULE_stmt = 30, RULE_blockStmt = 31, 
-		RULE_nullAbleStmtList = 32, RULE_asmStmt = 33, RULE_lhs = 34, RULE_ifStmt = 35, 
+		RULE_nullAbleVarDecl = 32, RULE_asmStmt = 33, RULE_lhs = 34, RULE_ifStmt = 35, 
 		RULE_forStmt = 36, RULE_toDownto = 37, RULE_breakStmt = 38, RULE_continueStmt = 39, 
 		RULE_returnStmt = 40, RULE_invokeStmt = 41;
 	private static String[] makeRuleNames() {
@@ -42,7 +42,7 @@ public class BKOOLParser extends Parser {
 			"atrbInit", "typ", "arrayTyp", "priTyp", "classTyp", "methodDecl", "paraList", 
 			"para", "arrayLit", "exp", "equalee", "andOree", "addSubee", "mulDivModee", 
 			"conCatee", "notee", "subAddee", "indexee", "memAccessee", "atom", "newee", 
-			"literal", "booleanLit", "argLits", "stmt", "blockStmt", "nullAbleStmtList", 
+			"literal", "booleanLit", "argLits", "stmt", "blockStmt", "nullAbleVarDecl", 
 			"asmStmt", "lhs", "ifStmt", "forStmt", "toDownto", "breakStmt", "continueStmt", 
 			"returnStmt", "invokeStmt"
 		};
@@ -2399,32 +2399,17 @@ public class BKOOLParser extends Parser {
 	public static class BlockStmtContext extends ParserRuleContext {
 		public TerminalNode LP() { return getToken(BKOOLParser.LP, 0); }
 		public TerminalNode RP() { return getToken(BKOOLParser.RP, 0); }
-		public List<TypContext> typ() {
-			return getRuleContexts(TypContext.class);
+		public List<NullAbleVarDeclContext> nullAbleVarDecl() {
+			return getRuleContexts(NullAbleVarDeclContext.class);
 		}
-		public TypContext typ(int i) {
-			return getRuleContext(TypContext.class,i);
+		public NullAbleVarDeclContext nullAbleVarDecl(int i) {
+			return getRuleContext(NullAbleVarDeclContext.class,i);
 		}
-		public List<TerminalNode> SM() { return getTokens(BKOOLParser.SM); }
-		public TerminalNode SM(int i) {
-			return getToken(BKOOLParser.SM, i);
+		public List<StmtContext> stmt() {
+			return getRuleContexts(StmtContext.class);
 		}
-		public NullAbleStmtListContext nullAbleStmtList() {
-			return getRuleContext(NullAbleStmtListContext.class,0);
-		}
-		public List<AtrbInitContext> atrbInit() {
-			return getRuleContexts(AtrbInitContext.class);
-		}
-		public AtrbInitContext atrbInit(int i) {
-			return getRuleContext(AtrbInitContext.class,i);
-		}
-		public List<TerminalNode> FINAL() { return getTokens(BKOOLParser.FINAL); }
-		public TerminalNode FINAL(int i) {
-			return getToken(BKOOLParser.FINAL, i);
-		}
-		public List<TerminalNode> CM() { return getTokens(BKOOLParser.CM); }
-		public TerminalNode CM(int i) {
-			return getToken(BKOOLParser.CM, i);
+		public StmtContext stmt(int i) {
+			return getRuleContext(StmtContext.class,i);
 		}
 		public BlockStmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2450,65 +2435,37 @@ public class BKOOLParser extends Parser {
 			{
 			setState(349);
 			match(LP);
-			setState(366);
+			setState(353);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,37,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,35,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(351);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-					if (_la==FINAL) {
-						{
-						setState(350);
-						match(FINAL);
-						}
-					}
-
-					setState(353);
-					typ();
-					{
-					setState(354);
-					atrbInit();
-					setState(359);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-					while (_la==CM) {
-						{
-						{
-						setState(355);
-						match(CM);
-						setState(356);
-						atrbInit();
-						}
-						}
-						setState(361);
-						_errHandler.sync(this);
-						_la = _input.LA(1);
-					}
-					}
-					setState(362);
-					match(SM);
+					setState(350);
+					nullAbleVarDecl();
 					}
 					} 
 				}
-				setState(368);
+				setState(355);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,37,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,35,_ctx);
 			}
-			setState(370);
+			setState(359);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STATIC) | (1L << FINAL) | (1L << BOOLEAN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FLOAT) | (1L << IF) | (1L << INT) | (1L << STRING) | (1L << FOR) | (1L << THIS) | (1L << RETURN) | (1L << TRUE) | (1L << FALSE) | (1L << VOID) | (1L << NEW) | (1L << LP) | (1L << INTLIT) | (1L << FLOATLIT) | (1L << STRINGLIT) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STATIC) | (1L << FINAL) | (1L << BOOLEAN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FLOAT) | (1L << IF) | (1L << INT) | (1L << STRING) | (1L << FOR) | (1L << THIS) | (1L << RETURN) | (1L << TRUE) | (1L << FALSE) | (1L << VOID) | (1L << NEW) | (1L << LP) | (1L << INTLIT) | (1L << FLOATLIT) | (1L << STRINGLIT) | (1L << ID))) != 0)) {
 				{
-				setState(369);
-				nullAbleStmtList();
+				{
+				setState(356);
+				stmt();
 				}
+				}
+				setState(361);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
 			}
-
-			setState(372);
+			setState(362);
 			match(RP);
 			}
 		}
@@ -2523,48 +2480,75 @@ public class BKOOLParser extends Parser {
 		return _localctx;
 	}
 
-	public static class NullAbleStmtListContext extends ParserRuleContext {
-		public List<StmtContext> stmt() {
-			return getRuleContexts(StmtContext.class);
+	public static class NullAbleVarDeclContext extends ParserRuleContext {
+		public TypContext typ() {
+			return getRuleContext(TypContext.class,0);
 		}
-		public StmtContext stmt(int i) {
-			return getRuleContext(StmtContext.class,i);
+		public List<AtrbInitContext> atrbInit() {
+			return getRuleContexts(AtrbInitContext.class);
 		}
-		public NullAbleStmtListContext(ParserRuleContext parent, int invokingState) {
+		public AtrbInitContext atrbInit(int i) {
+			return getRuleContext(AtrbInitContext.class,i);
+		}
+		public TerminalNode SM() { return getToken(BKOOLParser.SM, 0); }
+		public TerminalNode FINAL() { return getToken(BKOOLParser.FINAL, 0); }
+		public List<TerminalNode> CM() { return getTokens(BKOOLParser.CM); }
+		public TerminalNode CM(int i) {
+			return getToken(BKOOLParser.CM, i);
+		}
+		public NullAbleVarDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_nullAbleStmtList; }
+		@Override public int getRuleIndex() { return RULE_nullAbleVarDecl; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BKOOLListener ) ((BKOOLListener)listener).enterNullAbleStmtList(this);
+			if ( listener instanceof BKOOLListener ) ((BKOOLListener)listener).enterNullAbleVarDecl(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BKOOLListener ) ((BKOOLListener)listener).exitNullAbleStmtList(this);
+			if ( listener instanceof BKOOLListener ) ((BKOOLListener)listener).exitNullAbleVarDecl(this);
 		}
 	}
 
-	public final NullAbleStmtListContext nullAbleStmtList() throws RecognitionException {
-		NullAbleStmtListContext _localctx = new NullAbleStmtListContext(_ctx, getState());
-		enterRule(_localctx, 64, RULE_nullAbleStmtList);
+	public final NullAbleVarDeclContext nullAbleVarDecl() throws RecognitionException {
+		NullAbleVarDeclContext _localctx = new NullAbleVarDeclContext(_ctx, getState());
+		enterRule(_localctx, 64, RULE_nullAbleVarDecl);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(375); 
+			setState(365);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			do {
+			if (_la==FINAL) {
+				{
+				setState(364);
+				match(FINAL);
+				}
+			}
+
+			setState(367);
+			typ();
+			setState(368);
+			atrbInit();
+			setState(373);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==CM) {
 				{
 				{
-				setState(374);
-				stmt();
+				setState(369);
+				match(CM);
+				setState(370);
+				atrbInit();
 				}
 				}
-				setState(377); 
+				setState(375);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STATIC) | (1L << FINAL) | (1L << BOOLEAN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FLOAT) | (1L << IF) | (1L << INT) | (1L << STRING) | (1L << FOR) | (1L << THIS) | (1L << RETURN) | (1L << TRUE) | (1L << FALSE) | (1L << VOID) | (1L << NEW) | (1L << LP) | (1L << INTLIT) | (1L << FLOATLIT) | (1L << STRINGLIT) | (1L << ID))) != 0) );
+			}
+			setState(376);
+			match(SM);
 			}
 		}
 		catch (RecognitionException re) {
@@ -2607,13 +2591,13 @@ public class BKOOLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(379);
+			setState(378);
 			lhs();
-			setState(380);
+			setState(379);
 			match(ASSIGN);
-			setState(381);
+			setState(380);
 			exp();
-			setState(382);
+			setState(381);
 			match(SM);
 			}
 		}
@@ -2655,31 +2639,31 @@ public class BKOOLParser extends Parser {
 		LhsContext _localctx = new LhsContext(_ctx, getState());
 		enterRule(_localctx, 68, RULE_lhs);
 		try {
-			setState(390);
+			setState(389);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,40,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,39,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(384);
+				setState(383);
 				indexee();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(385);
+				setState(384);
 				memAccessee(0);
-				setState(386);
+				setState(385);
 				match(DOT);
-				setState(387);
+				setState(386);
 				match(ID);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(389);
+				setState(388);
 				match(ID);
 				}
 				break;
@@ -2727,36 +2711,36 @@ public class BKOOLParser extends Parser {
 		IfStmtContext _localctx = new IfStmtContext(_ctx, getState());
 		enterRule(_localctx, 70, RULE_ifStmt);
 		try {
-			setState(404);
+			setState(403);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,41,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,40,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(392);
+				setState(391);
 				match(IF);
-				setState(393);
+				setState(392);
 				exp();
-				setState(394);
+				setState(393);
 				match(THEN);
-				setState(395);
+				setState(394);
 				stmt();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(397);
+				setState(396);
 				match(IF);
-				setState(398);
+				setState(397);
 				exp();
-				setState(399);
+				setState(398);
 				match(THEN);
-				setState(400);
+				setState(399);
 				stmt();
-				setState(401);
+				setState(400);
 				match(ELSE);
-				setState(402);
+				setState(401);
 				stmt();
 				}
 				break;
@@ -2810,21 +2794,21 @@ public class BKOOLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(406);
+			setState(405);
 			match(FOR);
-			setState(407);
+			setState(406);
 			match(ID);
-			setState(408);
+			setState(407);
 			match(ASSIGN);
+			setState(408);
+			exp();
 			setState(409);
-			exp();
-			setState(410);
 			toDownto();
-			setState(411);
+			setState(410);
 			exp();
-			setState(412);
+			setState(411);
 			match(DO);
-			setState(413);
+			setState(412);
 			stmt();
 			}
 		}
@@ -2863,7 +2847,7 @@ public class BKOOLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(415);
+			setState(414);
 			_la = _input.LA(1);
 			if ( !(_la==TO || _la==DOWNTO) ) {
 			_errHandler.recoverInline(this);
@@ -2909,9 +2893,9 @@ public class BKOOLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(417);
+			setState(416);
 			match(BREAK);
-			setState(418);
+			setState(417);
 			match(SM);
 			}
 		}
@@ -2949,9 +2933,9 @@ public class BKOOLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(420);
+			setState(419);
 			match(CONTINUE);
-			setState(421);
+			setState(420);
 			match(SM);
 			}
 		}
@@ -2992,11 +2976,11 @@ public class BKOOLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(423);
+			setState(422);
 			match(RETURN);
-			setState(424);
+			setState(423);
 			exp();
-			setState(425);
+			setState(424);
 			match(SM);
 			}
 		}
@@ -3044,27 +3028,27 @@ public class BKOOLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(427);
+			setState(426);
 			memAccessee(0);
-			setState(428);
+			setState(427);
 			match(DOT);
-			setState(429);
+			setState(428);
 			match(ID);
-			setState(430);
+			setState(429);
 			match(LB);
-			setState(432);
+			setState(431);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << THIS) | (1L << TRUE) | (1L << FALSE) | (1L << ADD) | (1L << SUB) | (1L << NOT) | (1L << NEW) | (1L << LP) | (1L << INTLIT) | (1L << FLOATLIT) | (1L << STRINGLIT) | (1L << ID))) != 0)) {
 				{
-				setState(431);
+				setState(430);
 				argLits();
 				}
 			}
 
-			setState(434);
+			setState(433);
 			match(RB);
-			setState(435);
+			setState(434);
 			match(SM);
 			}
 		}
@@ -3124,7 +3108,7 @@ public class BKOOLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3A\u01b8\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3A\u01b7\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -3150,24 +3134,24 @@ public class BKOOLParser extends Parser {
 		"\3\32\7\32\u0131\n\32\f\32\16\32\u0134\13\32\3\33\3\33\3\33\3\33\3\33"+
 		"\5\33\u013b\n\33\3\34\3\34\3\34\3\34\5\34\u0141\n\34\3\34\3\34\3\35\3"+
 		"\35\3\35\3\35\5\35\u0149\n\35\3\36\3\36\3\37\3\37\3\37\7\37\u0150\n\37"+
-		"\f\37\16\37\u0153\13\37\3 \3 \3 \3 \3 \3 \3 \3 \3 \5 \u015e\n \3!\3!\5"+
-		"!\u0162\n!\3!\3!\3!\3!\7!\u0168\n!\f!\16!\u016b\13!\3!\3!\7!\u016f\n!"+
-		"\f!\16!\u0172\13!\3!\5!\u0175\n!\3!\3!\3\"\6\"\u017a\n\"\r\"\16\"\u017b"+
-		"\3#\3#\3#\3#\3#\3$\3$\3$\3$\3$\3$\5$\u0189\n$\3%\3%\3%\3%\3%\3%\3%\3%"+
-		"\3%\3%\3%\3%\5%\u0197\n%\3&\3&\3&\3&\3&\3&\3&\3&\3&\3\'\3\'\3(\3(\3(\3"+
-		")\3)\3)\3*\3*\3*\3*\3+\3+\3+\3+\3+\5+\u01b3\n+\3+\3+\3+\3+\2\6&(*\62,"+
-		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFH"+
-		"JLNPRT\2\n\5\2\n\n\17\17\21\22\3\2&)\3\2#$\3\2*+\3\2\35\36\3\2\37\"\3"+
-		"\2\27\30\3\2\33\34\2\u01cc\2Y\3\2\2\2\4^\3\2\2\2\6o\3\2\2\2\bs\3\2\2\2"+
+		"\f\37\16\37\u0153\13\37\3 \3 \3 \3 \3 \3 \3 \3 \3 \5 \u015e\n \3!\3!\7"+
+		"!\u0162\n!\f!\16!\u0165\13!\3!\7!\u0168\n!\f!\16!\u016b\13!\3!\3!\3\""+
+		"\5\"\u0170\n\"\3\"\3\"\3\"\3\"\7\"\u0176\n\"\f\"\16\"\u0179\13\"\3\"\3"+
+		"\"\3#\3#\3#\3#\3#\3$\3$\3$\3$\3$\3$\5$\u0188\n$\3%\3%\3%\3%\3%\3%\3%\3"+
+		"%\3%\3%\3%\3%\5%\u0196\n%\3&\3&\3&\3&\3&\3&\3&\3&\3&\3\'\3\'\3(\3(\3("+
+		"\3)\3)\3)\3*\3*\3*\3*\3+\3+\3+\3+\3+\5+\u01b2\n+\3+\3+\3+\3+\2\6&(*\62"+
+		",\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDF"+
+		"HJLNPRT\2\n\5\2\n\n\17\17\21\22\3\2&)\3\2#$\3\2*+\3\2\35\36\3\2\37\"\3"+
+		"\2\27\30\3\2\33\34\2\u01ca\2Y\3\2\2\2\4^\3\2\2\2\6o\3\2\2\2\bs\3\2\2\2"+
 		"\nv\3\2\2\2\f\u008e\3\2\2\2\16\u009b\3\2\2\2\20\u00a5\3\2\2\2\22\u00a7"+
 		"\3\2\2\2\24\u00ac\3\2\2\2\26\u00ae\3\2\2\2\30\u00b1\3\2\2\2\32\u00be\3"+
 		"\2\2\2\34\u00c6\3\2\2\2\36\u00cf\3\2\2\2 \u00df\3\2\2\2\"\u00e6\3\2\2"+
 		"\2$\u00ed\3\2\2\2&\u00ef\3\2\2\2(\u00fa\3\2\2\2*\u0105\3\2\2\2,\u0113"+
 		"\3\2\2\2.\u0118\3\2\2\2\60\u0120\3\2\2\2\62\u0122\3\2\2\2\64\u013a\3\2"+
 		"\2\2\66\u013c\3\2\2\28\u0148\3\2\2\2:\u014a\3\2\2\2<\u014c\3\2\2\2>\u015d"+
-		"\3\2\2\2@\u015f\3\2\2\2B\u0179\3\2\2\2D\u017d\3\2\2\2F\u0188\3\2\2\2H"+
-		"\u0196\3\2\2\2J\u0198\3\2\2\2L\u01a1\3\2\2\2N\u01a3\3\2\2\2P\u01a6\3\2"+
-		"\2\2R\u01a9\3\2\2\2T\u01ad\3\2\2\2VX\5\4\3\2WV\3\2\2\2X[\3\2\2\2YW\3\2"+
+		"\3\2\2\2@\u015f\3\2\2\2B\u016f\3\2\2\2D\u017c\3\2\2\2F\u0187\3\2\2\2H"+
+		"\u0195\3\2\2\2J\u0197\3\2\2\2L\u01a0\3\2\2\2N\u01a2\3\2\2\2P\u01a5\3\2"+
+		"\2\2R\u01a8\3\2\2\2T\u01ac\3\2\2\2VX\5\4\3\2WV\3\2\2\2X[\3\2\2\2YW\3\2"+
 		"\2\2YZ\3\2\2\2Z\\\3\2\2\2[Y\3\2\2\2\\]\7\2\2\3]\3\3\2\2\2^_\7\6\2\2_b"+
 		"\7=\2\2`a\7\7\2\2ac\7=\2\2b`\3\2\2\2bc\3\2\2\2cd\3\2\2\2dh\7\61\2\2eg"+
 		"\5\6\4\2fe\3\2\2\2gj\3\2\2\2hf\3\2\2\2hi\3\2\2\2ik\3\2\2\2jh\3\2\2\2k"+
@@ -3250,36 +3234,35 @@ public class BKOOLParser extends Parser {
 		"\u015e\5T+\2\u015d\u0154\3\2\2\2\u015d\u0155\3\2\2\2\u015d\u0156\3\2\2"+
 		"\2\u015d\u0157\3\2\2\2\u015d\u0158\3\2\2\2\u015d\u0159\3\2\2\2\u015d\u015a"+
 		"\3\2\2\2\u015d\u015b\3\2\2\2\u015d\u015c\3\2\2\2\u015e?\3\2\2\2\u015f"+
-		"\u0170\7\61\2\2\u0160\u0162\7\t\2\2\u0161\u0160\3\2\2\2\u0161\u0162\3"+
-		"\2\2\2\u0162\u0163\3\2\2\2\u0163\u0164\5\20\t\2\u0164\u0169\5\16\b\2\u0165"+
-		"\u0166\7\60\2\2\u0166\u0168\5\16\b\2\u0167\u0165\3\2\2\2\u0168\u016b\3"+
-		"\2\2\2\u0169\u0167\3\2\2\2\u0169\u016a\3\2\2\2\u016a\u016c\3\2\2\2\u016b"+
-		"\u0169\3\2\2\2\u016c\u016d\7/\2\2\u016d\u016f\3\2\2\2\u016e\u0161\3\2"+
-		"\2\2\u016f\u0172\3\2\2\2\u0170\u016e\3\2\2\2\u0170\u0171\3\2\2\2\u0171"+
-		"\u0174\3\2\2\2\u0172\u0170\3\2\2\2\u0173\u0175\5B\"\2\u0174\u0173\3\2"+
-		"\2\2\u0174\u0175\3\2\2\2\u0175\u0176\3\2\2\2\u0176\u0177\7\62\2\2\u0177"+
-		"A\3\2\2\2\u0178\u017a\5> \2\u0179\u0178\3\2\2\2\u017a\u017b\3\2\2\2\u017b"+
-		"\u0179\3\2\2\2\u017b\u017c\3\2\2\2\u017cC\3\2\2\2\u017d\u017e\5F$\2\u017e"+
-		"\u017f\7\5\2\2\u017f\u0180\5 \21\2\u0180\u0181\7/\2\2\u0181E\3\2\2\2\u0182"+
-		"\u0189\5\60\31\2\u0183\u0184\5\62\32\2\u0184\u0185\78\2\2\u0185\u0186"+
-		"\7=\2\2\u0186\u0189\3\2\2\2\u0187\u0189\7=\2\2\u0188\u0182\3\2\2\2\u0188"+
-		"\u0183\3\2\2\2\u0188\u0187\3\2\2\2\u0189G\3\2\2\2\u018a\u018b\7\20\2\2"+
-		"\u018b\u018c\5 \21\2\u018c\u018d\7\23\2\2\u018d\u018e\5> \2\u018e\u0197"+
-		"\3\2\2\2\u018f\u0190\7\20\2\2\u0190\u0191\5 \21\2\u0191\u0192\7\23\2\2"+
-		"\u0192\u0193\5> \2\u0193\u0194\7\16\2\2\u0194\u0195\5> \2\u0195\u0197"+
-		"\3\2\2\2\u0196\u018a\3\2\2\2\u0196\u018f\3\2\2\2\u0197I\3\2\2\2\u0198"+
-		"\u0199\7\24\2\2\u0199\u019a\7=\2\2\u019a\u019b\7\5\2\2\u019b\u019c\5 "+
-		"\21\2\u019c\u019d\5L\'\2\u019d\u019e\5 \21\2\u019e\u019f\7\r\2\2\u019f"+
-		"\u01a0\5> \2\u01a0K\3\2\2\2\u01a1\u01a2\t\t\2\2\u01a2M\3\2\2\2\u01a3\u01a4"+
-		"\7\13\2\2\u01a4\u01a5\7/\2\2\u01a5O\3\2\2\2\u01a6\u01a7\7\f\2\2\u01a7"+
-		"\u01a8\7/\2\2\u01a8Q\3\2\2\2\u01a9\u01aa\7\26\2\2\u01aa\u01ab\5 \21\2"+
-		"\u01ab\u01ac\7/\2\2\u01acS\3\2\2\2\u01ad\u01ae\5\62\32\2\u01ae\u01af\7"+
-		"8\2\2\u01af\u01b0\7=\2\2\u01b0\u01b2\7\63\2\2\u01b1\u01b3\5<\37\2\u01b2"+
-		"\u01b1\3\2\2\2\u01b2\u01b3\3\2\2\2\u01b3\u01b4\3\2\2\2\u01b4\u01b5\7\64"+
-		"\2\2\u01b5\u01b6\7/\2\2\u01b6U\3\2\2\2-Ybhosv{\u0080\u0084\u008e\u0096"+
-		"\u00a5\u00b1\u00b4\u00b9\u00c3\u00cc\u00d5\u00df\u00e6\u00ed\u00f7\u0102"+
-		"\u010d\u0113\u0118\u0120\u012d\u0130\u0132\u013a\u0140\u0148\u0151\u015d"+
-		"\u0161\u0169\u0170\u0174\u017b\u0188\u0196\u01b2";
+		"\u0163\7\61\2\2\u0160\u0162\5B\"\2\u0161\u0160\3\2\2\2\u0162\u0165\3\2"+
+		"\2\2\u0163\u0161\3\2\2\2\u0163\u0164\3\2\2\2\u0164\u0169\3\2\2\2\u0165"+
+		"\u0163\3\2\2\2\u0166\u0168\5> \2\u0167\u0166\3\2\2\2\u0168\u016b\3\2\2"+
+		"\2\u0169\u0167\3\2\2\2\u0169\u016a\3\2\2\2\u016a\u016c\3\2\2\2\u016b\u0169"+
+		"\3\2\2\2\u016c\u016d\7\62\2\2\u016dA\3\2\2\2\u016e\u0170\7\t\2\2\u016f"+
+		"\u016e\3\2\2\2\u016f\u0170\3\2\2\2\u0170\u0171\3\2\2\2\u0171\u0172\5\20"+
+		"\t\2\u0172\u0177\5\16\b\2\u0173\u0174\7\60\2\2\u0174\u0176\5\16\b\2\u0175"+
+		"\u0173\3\2\2\2\u0176\u0179\3\2\2\2\u0177\u0175\3\2\2\2\u0177\u0178\3\2"+
+		"\2\2\u0178\u017a\3\2\2\2\u0179\u0177\3\2\2\2\u017a\u017b\7/\2\2\u017b"+
+		"C\3\2\2\2\u017c\u017d\5F$\2\u017d\u017e\7\5\2\2\u017e\u017f\5 \21\2\u017f"+
+		"\u0180\7/\2\2\u0180E\3\2\2\2\u0181\u0188\5\60\31\2\u0182\u0183\5\62\32"+
+		"\2\u0183\u0184\78\2\2\u0184\u0185\7=\2\2\u0185\u0188\3\2\2\2\u0186\u0188"+
+		"\7=\2\2\u0187\u0181\3\2\2\2\u0187\u0182\3\2\2\2\u0187\u0186\3\2\2\2\u0188"+
+		"G\3\2\2\2\u0189\u018a\7\20\2\2\u018a\u018b\5 \21\2\u018b\u018c\7\23\2"+
+		"\2\u018c\u018d\5> \2\u018d\u0196\3\2\2\2\u018e\u018f\7\20\2\2\u018f\u0190"+
+		"\5 \21\2\u0190\u0191\7\23\2\2\u0191\u0192\5> \2\u0192\u0193\7\16\2\2\u0193"+
+		"\u0194\5> \2\u0194\u0196\3\2\2\2\u0195\u0189\3\2\2\2\u0195\u018e\3\2\2"+
+		"\2\u0196I\3\2\2\2\u0197\u0198\7\24\2\2\u0198\u0199\7=\2\2\u0199\u019a"+
+		"\7\5\2\2\u019a\u019b\5 \21\2\u019b\u019c\5L\'\2\u019c\u019d\5 \21\2\u019d"+
+		"\u019e\7\r\2\2\u019e\u019f\5> \2\u019fK\3\2\2\2\u01a0\u01a1\t\t\2\2\u01a1"+
+		"M\3\2\2\2\u01a2\u01a3\7\13\2\2\u01a3\u01a4\7/\2\2\u01a4O\3\2\2\2\u01a5"+
+		"\u01a6\7\f\2\2\u01a6\u01a7\7/\2\2\u01a7Q\3\2\2\2\u01a8\u01a9\7\26\2\2"+
+		"\u01a9\u01aa\5 \21\2\u01aa\u01ab\7/\2\2\u01abS\3\2\2\2\u01ac\u01ad\5\62"+
+		"\32\2\u01ad\u01ae\78\2\2\u01ae\u01af\7=\2\2\u01af\u01b1\7\63\2\2\u01b0"+
+		"\u01b2\5<\37\2\u01b1\u01b0\3\2\2\2\u01b1\u01b2\3\2\2\2\u01b2\u01b3\3\2"+
+		"\2\2\u01b3\u01b4\7\64\2\2\u01b4\u01b5\7/\2\2\u01b5U\3\2\2\2,Ybhosv{\u0080"+
+		"\u0084\u008e\u0096\u00a5\u00b1\u00b4\u00b9\u00c3\u00cc\u00d5\u00df\u00e6"+
+		"\u00ed\u00f7\u0102\u010d\u0113\u0118\u0120\u012d\u0130\u0132\u013a\u0140"+
+		"\u0148\u0151\u015d\u0163\u0169\u016f\u0177\u0187\u0195\u01b1";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -327,15 +327,15 @@ public interface BKOOLListener extends ParseTreeListener {
 	 */
 	void exitBlockStmt(BKOOLParser.BlockStmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BKOOLParser#nullAbleStmtList}.
+	 * Enter a parse tree produced by {@link BKOOLParser#nullAbleVarDecl}.
 	 * @param ctx the parse tree
 	 */
-	void enterNullAbleStmtList(BKOOLParser.NullAbleStmtListContext ctx);
+	void enterNullAbleVarDecl(BKOOLParser.NullAbleVarDeclContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BKOOLParser#nullAbleStmtList}.
+	 * Exit a parse tree produced by {@link BKOOLParser#nullAbleVarDecl}.
 	 * @param ctx the parse tree
 	 */
-	void exitNullAbleStmtList(BKOOLParser.NullAbleStmtListContext ctx);
+	void exitNullAbleVarDecl(BKOOLParser.NullAbleVarDeclContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BKOOLParser#asmStmt}.
 	 * @param ctx the parse tree
