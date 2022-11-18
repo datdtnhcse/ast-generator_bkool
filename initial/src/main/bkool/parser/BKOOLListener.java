@@ -387,16 +387,6 @@ public interface BKOOLListener extends ParseTreeListener {
 	 */
 	void exitForStmt(BKOOLParser.ForStmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BKOOLParser#toDownto}.
-	 * @param ctx the parse tree
-	 */
-	void enterToDownto(BKOOLParser.ToDowntoContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKOOLParser#toDownto}.
-	 * @param ctx the parse tree
-	 */
-	void exitToDownto(BKOOLParser.ToDowntoContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link BKOOLParser#breakStmt}.
 	 * @param ctx the parse tree
 	 */

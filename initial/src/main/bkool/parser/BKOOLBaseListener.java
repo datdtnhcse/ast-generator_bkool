@@ -471,18 +471,6 @@ public class BKOOLBaseListener implements BKOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterToDownto(BKOOLParser.ToDowntoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitToDownto(BKOOLParser.ToDowntoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterBreakStmt(BKOOLParser.BreakStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}

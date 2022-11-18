@@ -359,16 +359,41 @@ class ASTGeneration(BKOOLVisitor):
                   ctx.stmt(0).accept(self),
                   ctx.stmt(1).accept(self) if ctx.ELSE() else None)
     
+    def visitForStmt(self, ctx:BKOOLParser.ForStmtContext):
+        # forStmt: FOR ID ASSIGN exp (TO | DOWNTO) exp DO stmt;
+        return For(Id(ctx.ID().getText()),
+                   ctx.exp(0).accept(self),
+                   ctx.exp(1).accept(self),
+                   bool(True) if ctx.TO() else bool(False), 
+                   ctx.stmt().accept(self))
+
+    def visitBreakStmt(self, ctx:BKOOLParser.BreakStmtContext):
+        # breakStmt: BREAK SM;
+        return Break()
+
+    def visitContinueStmt(self, ctx:BKOOLParser.ContinueStmtContext):
+        # continueStmt: CONTINUE SM;
+        return Continue()
+
+    def visitReturnStmt(self, ctx:BKOOLParser.ReturnStmtContext):
+        # returnStmt: RETURN exp SM;
+        return Return(ctx.exp().accept(self))
+
+    def visitInvokeStmt(self, ctx:BKOOLParser.invokeStmtContext):
+        # invokeStmt: memAccessee DOT ID LB argLits? RB SM;
+        if ctx.argLits():
+            return CallStmt(ctx.memAccessee().accept(self),
+                            ctx.ID().accept(self),
+                            ctx.argLits().accept(self))
+        else: 
+            return FieldAcess(ctx.memAccessee().accept(self),
+                              ctx.ID().accept(self))
 
 
-
-
-
-
-
+# argLits: exp (CM exp)*;
 
 """
-ifStmt: IF exp THEN stmt | IF exp THEN stmt ELSE stmt;
+breakStmt: BREAK SM;
 """
 
 

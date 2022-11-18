@@ -108,8 +108,7 @@ ifStmt: IF exp THEN stmt
 	| IF exp THEN stmt ELSE stmt;
 
  // 6.4.for statement
-forStmt: FOR ID ASSIGN exp toDownto exp DO stmt;
-toDownto: TO | DOWNTO;
+forStmt: FOR ID ASSIGN exp (TO | DOWNTO) exp DO stmt;
 
 // 6.5.break statement
 breakStmt: BREAK SM;
