@@ -67,6 +67,16 @@ public interface BKOOLListener extends ParseTreeListener {
 	 */
 	void exitImmutDecl(BKOOLParser.ImmutDeclContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BKOOLParser#idList}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdList(BKOOLParser.IdListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKOOLParser#idList}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdList(BKOOLParser.IdListContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BKOOLParser#atrbInit}.
 	 * @param ctx the parse tree
 	 */
@@ -327,15 +337,15 @@ public interface BKOOLListener extends ParseTreeListener {
 	 */
 	void exitBlockStmt(BKOOLParser.BlockStmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BKOOLParser#nullAbleVarDecl}.
+	 * Enter a parse tree produced by {@link BKOOLParser#nullAbleDeclList}.
 	 * @param ctx the parse tree
 	 */
-	void enterNullAbleVarDecl(BKOOLParser.NullAbleVarDeclContext ctx);
+	void enterNullAbleDeclList(BKOOLParser.NullAbleDeclListContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BKOOLParser#nullAbleVarDecl}.
+	 * Exit a parse tree produced by {@link BKOOLParser#nullAbleDeclList}.
 	 * @param ctx the parse tree
 	 */
-	void exitNullAbleVarDecl(BKOOLParser.NullAbleVarDeclContext ctx);
+	void exitNullAbleDeclList(BKOOLParser.NullAbleDeclListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BKOOLParser#asmStmt}.
 	 * @param ctx the parse tree

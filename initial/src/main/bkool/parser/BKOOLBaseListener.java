@@ -87,6 +87,18 @@ public class BKOOLBaseListener implements BKOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIdList(BKOOLParser.IdListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdList(BKOOLParser.IdListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAtrbInit(BKOOLParser.AtrbInitContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -399,13 +411,13 @@ public class BKOOLBaseListener implements BKOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNullAbleVarDecl(BKOOLParser.NullAbleVarDeclContext ctx) { }
+	@Override public void enterNullAbleDeclList(BKOOLParser.NullAbleDeclListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNullAbleVarDecl(BKOOLParser.NullAbleVarDeclContext ctx) { }
+	@Override public void exitNullAbleDeclList(BKOOLParser.NullAbleDeclListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

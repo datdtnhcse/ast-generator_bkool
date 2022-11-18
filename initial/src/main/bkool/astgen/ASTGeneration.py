@@ -29,7 +29,7 @@ class ASTGeneration(BKOOLVisitor):
             return ctx.mutDecl().accept(self)
 
     def visitMutDecl(self, ctx:BKOOLParser.ImuDeclContext):
-        # mutDecl: STATIC? typ ID atrbInit? (CM ID atrbInit?)* SM;
+        # mutDecl: STATIC? typ ID atrbInit (CM ID atrbInit)* SM;
         kind = Static() if ctx.STATIC() else Instance()
         result = ''
         result += str(AttributeDecl(kind, 
@@ -48,7 +48,7 @@ class ASTGeneration(BKOOLVisitor):
         return result
 
     def visitAtrbInit(self, ctx:BKOOLParser.AtrbInitContext):
-        # atrbInit: EQQ exp;
+        # atrbInit: (EQQ exp)?;
         return ctx.exp().accept(self)
 
     def visitTyp(self, ctx:BKOOLParser.TypContext):
@@ -310,20 +310,65 @@ class ASTGeneration(BKOOLVisitor):
             return ctx.invokeStmt().accept(self)
 
     def visitBlockStmt(self, ctx:BKOOLParser.BlockStmtContext):
-        # blockStmt: LP nullAbleVarDecl* stmt* RP;
-        return Block([self.visit(x) for x in ctx.nullAbleVarDecl()],
-                     [self.visit(y) for y in ctx.stmt()])
+        # blockStmt: LP nullAbleDeclList* stmt* RP;
+        return Block([self.visit(x) for x in ctx.nullAbleDeclList()] if ctx.nullAbleDeclList() else [],
+                     [self.visit(y) for y in ctx.stmt()] if ctx.stmt() else [])
         
-    def visitNullAbleVarDecl(self, ctx:BKOOLParser.NullAbleVarDeclContext):
-        # nullAbleVarDecl: FINAL? typ atrbInit (CM atrbInit)* SM;
+    def visitNullAbleDeclList(self, ctx:BKOOLParser.nullAbleDeclListContext): 
+        # nullAbleDeclList: FINAL? typ ID atrbInit (CM ID atrbInit)* SM;
+        result = []
         if ctx.FINAL():
-            return immu
+            result.append(ConstDecl(ID(ctx.ID(i).getText()),
+                                        ctx.typ().accept(self),
+                                        ctx.atrbInit().accept(self)))
+            if ctx.CM():
+                size = len(ctx.CM())
+                for i in range (1, size + 1):
+                    result.append(ConstDecl(ID(ctx.ID(i).getText()),
+                                            ctx.typ().accept(self),
+                                            ctx.atrbInit().accept(self)))
+        else:
+            result.append(VarDecl(ID(ctx.ID(i).getText()),
+                                  ctx.typ().accept(self),
+                                  ctx.atrbInit().accept(self)))
+            if ctx.CM():
+                size = len(ctx.CM())
+                for i in range (1, size + 1):
+                    result.append(VarDecl(ID(ctx.ID(i).getText()),
+                                          ctx.typ().accept(self),
+                                          ctx.atrbInit().accept(self)))
+
+    def visitAsmStmt(self, ctx:BKOOLParser.AsmStmtContext):
+        # asmStmt: lhs ASSIGN exp SM;
+        return Assign(ctx.lhs().accept(self),
+                      ctx.exp().accept(self))
+
+    def visitLhs(self, ctx:BKOOLParser.LhsContext):
+        # lhs: indexee | memAccessee DOT ID | ID;
+        if ctx.getChildCount() == 3:
+            return fieldAccess(ctx.memAccessee().accept(self),
+                               ID(ctx.ID().getText()))
+        elif ctx.ID():
+            return Id(ctx.ID().getText())
+        else:
+            return ctx.indexee().accept(self)
+
+    def visitIfStmt(self, ctx:BKOOLParser.IfStmtContext):
+        # ifStmt: IF exp THEN stmt | IF exp THEN stmt ELSE stmt;
+        return If(ctx.exp().accept(self),
+                  ctx.stmt(0).accept(self),
+                  ctx.stmt(1).accept(self) if ctx.ELSE() else None)
+    
+
+
+
+
+
 
 
 
 """
-nullAbleVarDecl: FINAL? typ atrbInit (CM atrbInit)* SM;
-nullAbleStmtList: stmt+;
+ifStmt: IF exp THEN stmt | IF exp THEN stmt ELSE stmt;
 """
 
 
