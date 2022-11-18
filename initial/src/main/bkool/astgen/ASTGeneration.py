@@ -28,7 +28,7 @@ class ASTGeneration(BKOOLVisitor):
         else: 
             return ctx.mutDecl().accept(self)
 
-    def visitMutDecl(self, ctx:BKOOLParser.ImuDeclContext):
+    def visitMutDecl(self, ctx:BKOOLParser.MutDeclContext):
         # mutDecl: STATIC? typ ID atrbInit (CM ID atrbInit)* SM;
         kind = Static() if ctx.STATIC() else Instance()
         result = ''
@@ -212,7 +212,7 @@ class ASTGeneration(BKOOLVisitor):
         else:
             return ctx.conCatee().accept(self)
 
-    def visitConCatee(self, ctx:BKOOLParser.ConcateeContext):
+    def visitConCatee(self, ctx:BKOOLParser.ConCateeContext):
         # conCatee: conCatee (CONCAT) notee | notee;
         if ctx.getChildCount() == 3:
             return BinaryOp("^",
@@ -314,7 +314,7 @@ class ASTGeneration(BKOOLVisitor):
         return Block([self.visit(x) for x in ctx.nullAbleDeclList()] if ctx.nullAbleDeclList() else [],
                      [self.visit(y) for y in ctx.stmt()] if ctx.stmt() else [])
         
-    def visitNullAbleDeclList(self, ctx:BKOOLParser.nullAbleDeclListContext): 
+    def visitNullAbleDeclList(self, ctx:BKOOLParser.NullAbleDeclListContext): 
         # nullAbleDeclList: FINAL? typ ID atrbInit (CM ID atrbInit)* SM;
         result = []
         if ctx.FINAL():
@@ -379,7 +379,7 @@ class ASTGeneration(BKOOLVisitor):
         # returnStmt: RETURN exp SM;
         return Return(ctx.exp().accept(self))
 
-    def visitInvokeStmt(self, ctx:BKOOLParser.invokeStmtContext):
+    def visitInvokeStmt(self, ctx:BKOOLParser.InvokeStmtContext):
         # invokeStmt: memAccessee DOT ID LB argLits? RB SM;
         if ctx.argLits():
             return CallStmt(ctx.memAccessee().accept(self),

@@ -19,11 +19,6 @@ class BKOOLVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKOOLParser#extds.
-    def visitExtds(self, ctx:BKOOLParser.ExtdsContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by BKOOLParser#member.
     def visitMember(self, ctx:BKOOLParser.MemberContext):
         return self.visitChildren(ctx)
@@ -34,13 +29,18 @@ class BKOOLVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKOOLParser#atrbType.
-    def visitAtrbType(self, ctx:BKOOLParser.AtrbTypeContext):
+    # Visit a parse tree produced by BKOOLParser#mutDecl.
+    def visitMutDecl(self, ctx:BKOOLParser.MutDeclContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKOOLParser#atrb.
-    def visitAtrb(self, ctx:BKOOLParser.AtrbContext):
+    # Visit a parse tree produced by BKOOLParser#immutDecl.
+    def visitImmutDecl(self, ctx:BKOOLParser.ImmutDeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKOOLParser#idList.
+    def visitIdList(self, ctx:BKOOLParser.IdListContext):
         return self.visitChildren(ctx)
 
 
@@ -56,6 +56,11 @@ class BKOOLVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BKOOLParser#arrayTyp.
     def visitArrayTyp(self, ctx:BKOOLParser.ArrayTypContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKOOLParser#priTyp.
+    def visitPriTyp(self, ctx:BKOOLParser.PriTypContext):
         return self.visitChildren(ctx)
 
 
@@ -81,11 +86,6 @@ class BKOOLVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BKOOLParser#arrayLit.
     def visitArrayLit(self, ctx:BKOOLParser.ArrayLitContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKOOLParser#litList.
-    def visitLitList(self, ctx:BKOOLParser.LitListContext):
         return self.visitChildren(ctx)
 
 
@@ -174,8 +174,8 @@ class BKOOLVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKOOLParser#nullAbleStmtList.
-    def visitNullAbleStmtList(self, ctx:BKOOLParser.NullAbleStmtListContext):
+    # Visit a parse tree produced by BKOOLParser#nullAbleDeclList.
+    def visitNullAbleDeclList(self, ctx:BKOOLParser.NullAbleDeclListContext):
         return self.visitChildren(ctx)
 
 
@@ -196,11 +196,6 @@ class BKOOLVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BKOOLParser#forStmt.
     def visitForStmt(self, ctx:BKOOLParser.ForStmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKOOLParser#toDownto.
-    def visitToDownto(self, ctx:BKOOLParser.ToDowntoContext):
         return self.visitChildren(ctx)
 
 
