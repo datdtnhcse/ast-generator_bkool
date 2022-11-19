@@ -1,1 +1,4 @@
-class A340 {}
+class aasda {
+           float b(int a) {if false || true then a:= 5;}
+        }
+        

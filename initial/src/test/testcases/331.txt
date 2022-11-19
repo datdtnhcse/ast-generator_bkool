@@ -1,1 +1,4 @@
-class A331 {}
+class a {
+           boolean a= TRUE || FALSE;
+        }
+        

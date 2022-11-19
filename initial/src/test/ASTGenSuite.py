@@ -493,7 +493,7 @@ class ASTGenSuite(unittest.TestCase):
                                             [
                                                 Return(
                                                     BinaryOp(
-                                                        "\\",
+                                                        "/",
                                                         BinaryOp(
                                                             "*",
                                                             FieldAccess(
@@ -689,7 +689,7 @@ class ASTGenSuite(unittest.TestCase):
                                                     "*", IntLiteral(5), IntLiteral(7)
                                                 ),
                                                 BinaryOp(
-                                                    "\\", IntLiteral(3), IntLiteral(3)
+                                                    "/", IntLiteral(3), IntLiteral(3)
                                                 ),
                                             ),
                                         ),
@@ -765,7 +765,9 @@ class ASTGenSuite(unittest.TestCase):
                                 [
                                     AttributeDecl(
                                         Instance(),
-                                        VarDecl(Id("a"), FloatType(), FloatLiteral(12.3e3)),
+                                        VarDecl(
+                                            Id("a"), FloatType(), FloatLiteral(12.3e3)
+                                        ),
                                     )
                                 ],
                             )
@@ -777,111 +779,749 @@ class ASTGenSuite(unittest.TestCase):
         )
 
     def test_323(self):
-        input = "class A323 {}"
+        input = """class a {
+            int[3] a = {1,2,3,4};
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A323"), [], None)])), 323)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            ArrayType(3, IntType()),
+                                            ArrayLiteral(
+                                                [
+                                                    IntLiteral(1),
+                                                    IntLiteral(2),
+                                                    IntLiteral(3),
+                                                    IntLiteral(4),
+                                                ]
+                                            ),
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                323,
+            )
         )
 
     def test_324(self):
-        input = "class A324 {}"
+        input = """class a {
+            int[3] a = {1,2,3,4};
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A324"), [], None)])), 324)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            ArrayType(3, IntType()),
+                                            ArrayLiteral(
+                                                [
+                                                    IntLiteral(1),
+                                                    IntLiteral(2),
+                                                    IntLiteral(3),
+                                                    IntLiteral(4),
+                                                ]
+                                            ),
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                324,
+            )
         )
 
     def test_325(self):
-        input = "class A325 {}"
+        input = """class a {
+            float a(){a[3+x.foo(2)] := a[b[2]] +3;}
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A325"), [], None)])), 325)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a"),
+                                        [],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                Assign(
+                                                    ArrayCell(
+                                                        Id("a"),
+                                                        BinaryOp(
+                                                            "+",
+                                                            IntLiteral(3),
+                                                            CallExpr(
+                                                                Id("x"),
+                                                                Id("foo"),
+                                                                [IntLiteral(2)],
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    BinaryOp(
+                                                        "+",
+                                                        ArrayCell(
+                                                            Id("a"),
+                                                            ArrayCell(
+                                                                Id("b"), IntLiteral(2)
+                                                            ),
+                                                        ),
+                                                        IntLiteral(3),
+                                                    ),
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                325,
+            )
         )
 
     def test_326(self):
-        input = "class A326 {}"
+        input = """class a {
+            float b(int a) {x.b[2] := x.m()[3];}
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A326"), [], None)])), 326)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("b"),
+                                        [VarDecl(Id("a"), IntType())],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                Assign(
+                                                    ArrayCell(
+                                                        FieldAccess(Id("x"), Id("b")),
+                                                        IntLiteral(2),
+                                                    ),
+                                                    ArrayCell(
+                                                        CallExpr(Id("x"), Id("m"), []),
+                                                        IntLiteral(3),
+                                                    ),
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                326,
+            )
         )
 
     def test_327(self):
-        input = "class A327 {}"
+        input = """class a {
+            float a () {
+                int a = new a();
+            }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A327"), [], None)])), 327)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a"),
+                                        [],
+                                        FloatType(),
+                                        Block(
+                                            [
+                                                VarDecl(
+                                                    Id("a"),
+                                                    IntType(),
+                                                    NewExpr(Id("a"), []),
+                                                )
+                                            ],
+                                            [],
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                327,
+            )
         )
 
     def test_328(self):
-        input = "class A328 {}"
+        input = """class a {
+            float a () {
+                this.a := a;
+            }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A328"), [], None)])), 328)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a"),
+                                        [],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                Assign(
+                                                    FieldAccess(SelfLiteral(), Id("a")),
+                                                    Id("a"),
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                328,
+            )
         )
 
     def test_329(self):
-        input = "class A329 {}"
+        input = """class a {
+            int a = 4*3/3*3;
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A329"), [], None)])), 329)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            IntType(),
+                                            BinaryOp(
+                                                "*",
+                                                BinaryOp(
+                                                    "/",
+                                                    BinaryOp(
+                                                        "*",
+                                                        IntLiteral(4),
+                                                        IntLiteral(3),
+                                                    ),
+                                                    IntLiteral(3),
+                                                ),
+                                                IntLiteral(3),
+                                            ),
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                329,
+            )
         )
 
     def test_330(self):
-        input = "class A330 {}"
+        input = """class a {
+            int a = 4+3/3*3;
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A330"), [], None)])), 330)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            IntType(),
+                                            BinaryOp(
+                                                "+",
+                                                IntLiteral(4),
+                                                BinaryOp(
+                                                    "*",
+                                                    BinaryOp(
+                                                        "/",
+                                                        IntLiteral(3),
+                                                        IntLiteral(3),
+                                                    ),
+                                                    IntLiteral(3),
+                                                ),
+                                            ),
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                330,
+            )
         )
 
     def test_331(self):
-        input = "class A331 {}"
+        input = """class a {
+           boolean a= TRUE || FALSE;
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A331"), [], None)])), 331)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            BoolType(),
+                                            BinaryOp("||", Id("TRUE"), Id("FALSE")),
+                                        ),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                331,
+            )
         )
 
     def test_332(self):
-        input = "class A332 {}"
+        input = """class a {
+           float a() {
+            if TRUE then a := 2;
+           }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A332"), [], None)])), 332)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a"),
+                                        [],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                If(
+                                                    Id("TRUE"),
+                                                    Assign(Id("a"), IntLiteral(2)),
+                                                    None,
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                332,
+            )
         )
 
     def test_333(self):
-        input = "class A333 {}"
+        input = """class a {
+           float a() {
+            if TRUE then a := 2; else for a:=2 to 3 do a:=2;
+           }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A333"), [], None)])), 333)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a"),
+                                        [],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                If(
+                                                    Id("TRUE"),
+                                                    Assign(Id("a"), IntLiteral(2)),
+                                                    For(
+                                                        Id("a"),
+                                                        IntLiteral(2),
+                                                        IntLiteral(3),
+                                                        True,
+                                                        Assign(Id("a"), IntLiteral(2)),
+                                                    ),
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                333,
+            )
         )
 
     def test_334(self):
-        input = "class A334 {}"
+        input = """class a {
+           int[4] a= 2;
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A334"), [], None)])), 334)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            ArrayType(4, IntType()),
+                                            IntLiteral(2),
+                                        ),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                334,
+            )
         )
 
     def test_335(self):
-        input = "class A335 {}"
+        input = """class a {
+           float a() {
+                s.Shape();
+           }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A335"), [], None)])), 335)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a"),
+                                        [],
+                                        FloatType(),
+                                        Block([], [CallStmt(Id("s"), Id("Shape"), [])]),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                335,
+            )
         )
 
     def test_336(self):
-        input = "class A336 {}"
+        input = """class a {
+           float a() {
+                s.Shape(2,a,3);
+           }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A336"), [], None)])), 336)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a"),
+                                        [],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                CallStmt(
+                                                    Id("s"),
+                                                    Id("Shape"),
+                                                    [
+                                                        IntLiteral(2),
+                                                        Id("a"),
+                                                        IntLiteral(3),
+                                                    ],
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                336,
+            )
         )
 
     def test_337(self):
-        input = "class A337 {}"
+        input = """class a {
+           float a(int a; string b) {}
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A337"), [], None)])), 337)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a"),
+                                        [
+                                            VarDecl(Id("a"), IntType(), None),
+                                            VarDecl(Id("b"), StringType(), None),
+                                        ],
+                                        FloatType(),
+                                        Block([], []),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                337,
+            )
         )
 
     def test_338(self):
-        input = "class A338 {}"
+        input = """class a {
+           float b(int a) {x.b[2] := x.m()[a];}
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A338"), [], None)])), 338)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("b"),
+                                        [VarDecl(Id("a"), IntType(), None)],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                Assign(
+                                                    ArrayCell(
+                                                        FieldAccess(Id("x"), Id("b")),
+                                                        IntLiteral(2),
+                                                    ),
+                                                    ArrayCell(
+                                                        CallExpr(Id("x"), Id("m"), []),
+                                                        Id("a"),
+                                                    ),
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                338,
+            )
         )
 
     def test_339(self):
-        input = "class A339 {}"
+        input = """class a {
+           float b(int a) {x.b[2] := x.m()[asd];}
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A339"), [], None)])), 339)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("b"),
+                                        [VarDecl(Id("a"), IntType(), None)],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                Assign(
+                                                    ArrayCell(
+                                                        FieldAccess(Id("x"), Id("b")),
+                                                        IntLiteral(2),
+                                                    ),
+                                                    ArrayCell(
+                                                        CallExpr(Id("x"), Id("m"), []),
+                                                        Id("asd"),
+                                                    ),
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                339,
+            )
         )
 
     def test_340(self):
-        input = "class A340 {}"
+        input = """class aasda {
+           float b(int a) {if false || true then a:= 5;}
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A340"), [], None)])), 340)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("aasda"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("b"),
+                                        [VarDecl(Id("a"), IntType(), None)],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                If(
+                                                    BinaryOp(
+                                                        "||",
+                                                        BooleanLiteral(False),
+                                                        BooleanLiteral(True),
+                                                    ),
+                                                    Assign(Id("a"), IntLiteral(5)),
+                                                    None,
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                                None,
+                            )
+                        ]
+                    )
+                ),
+                340,
+            )
         )
 
     def test_341(self):

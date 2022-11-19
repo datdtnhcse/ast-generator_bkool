@@ -219,7 +219,7 @@ class ASTGeneration(BKOOLVisitor):
         # andOree: addSubee (AND | OR) andOree | addSubee;
         if ctx.getChildCount() == 3:
             return BinaryOp(
-                "&&" if ctx.AND() else "!=",
+                "&&" if ctx.AND() else "||",
                 ctx.addSubee().accept(self),
                 ctx.andOree().accept(self),
             )
@@ -246,11 +246,11 @@ class ASTGeneration(BKOOLVisitor):
                 )
             elif ctx.INTDIV():
                 return BinaryOp(
-                    "/", ctx.mulDivModee().accept(self), ctx.conCatee().accept(self)
+                    "\\", ctx.mulDivModee().accept(self), ctx.conCatee().accept(self)
                 )
             elif ctx.FLDIV():
                 return BinaryOp(
-                    "\\", ctx.mulDivModee().accept(self), ctx.conCatee().accept(self)
+                    "/", ctx.mulDivModee().accept(self), ctx.conCatee().accept(self)
                 )
             elif ctx.MOD():
                 return BinaryOp(
@@ -409,7 +409,7 @@ class ASTGeneration(BKOOLVisitor):
     def visitLhs(self, ctx: BKOOLParser.LhsContext):
         # lhs: indexee | memAccessee DOT ID | ID;
         if ctx.getChildCount() == 3:
-            return fieldAccess(ctx.memAccessee().accept(self), Id(ctx.ID().getText()))
+            return FieldAccess(ctx.memAccessee().accept(self), Id(ctx.ID().getText()))
         elif ctx.ID():
             return Id(ctx.ID().getText())
         else:
@@ -446,15 +446,15 @@ class ASTGeneration(BKOOLVisitor):
         return Return(ctx.exp().accept(self))
 
     def visitInvokeStmt(self, ctx: BKOOLParser.InvokeStmtContext):
-        # invokeStmt: memAccessee DOT ID LB argLits? RB SM;
-        if ctx.argLits():
+        # invokeStmt: memAccessee DOT ID (LB argLits? RB)? SM;
+        if ctx.LB():
             return CallStmt(
                 ctx.memAccessee().accept(self),
                 Id(ctx.ID().getText()),
-                ctx.argLits().accept(self),
+                ctx.argLits().accept(self) if ctx.argLits() else [],
             )
         else:
-            return FieldAcess(ctx.memAccessee().accept(self), Id(ctx.ID().getText()))
+            return FieldAccess(ctx.memAccessee().accept(self), Id(ctx.ID().getText()))
 
 
 # argLits: exp (CM exp)*;

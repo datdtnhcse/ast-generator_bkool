@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A340),[])])
+Program([ClassDecl(Id("aasda"),[MethodDecl(Instance(),Id("b"),[VarDecl(Id("a"),IntType(),None)],FloatType(),Block([],[If(BinaryOp("||",BooleanLiteral(False),BooleanLiteral(True)),Assign(Id("a"),IntLiteral(5)),None)]))],None)])

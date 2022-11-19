@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A328),[])])
+Program([ClassDecl(Id("a"),[MethodDecl(Instance(),Id("a"),[],FloatType(),Block([],[Assign(FieldAccess(SelfLiteral(),Id("a")),Id("a"))]))],None)])

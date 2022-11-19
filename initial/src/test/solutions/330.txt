@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A330),[])])
+Program([ClassDecl(Id("a"),[AttributeDecl(Instance(),VarDecl(Id("a"),IntType(),BinaryOp("+",IntLiteral(4),BinaryOp("*",BinaryOp("/",IntLiteral(3),IntLiteral(3)),IntLiteral(3)))))],None)])

@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A364),[])])
+Program([ClassDecl(Id("A364"),[],None)])

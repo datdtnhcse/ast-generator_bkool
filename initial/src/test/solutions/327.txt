@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A327),[])])
+Program([ClassDecl(Id("a"),[MethodDecl(Instance(),Id("a"),[],FloatType(),Block([VarDecl(Id("a"),IntType(),NewExpr(Id("a"),[]))],[]))],None)])

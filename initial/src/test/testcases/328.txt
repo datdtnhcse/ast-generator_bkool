@@ -1,1 +1,6 @@
-class A328 {}
+class a {
+            float a () {
+                this.a := a;
+            }
+        }
+        

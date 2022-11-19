@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A339),[])])
+Program([ClassDecl(Id("a"),[MethodDecl(Instance(),Id("b"),[VarDecl(Id("a"),IntType(),None)],FloatType(),Block([],[Assign(ArrayCell(FieldAccess(Id("x"),Id("b")),IntLiteral(2)),ArrayCell(CallExpr(Id("x"),Id("m"),[]),Id("asd")))]))],None)])

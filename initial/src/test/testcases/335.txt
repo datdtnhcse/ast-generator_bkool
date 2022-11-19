@@ -1,1 +1,6 @@
-class A335 {}
+class a {
+           float a() {
+                s.Shape();
+           }
+        }
+        

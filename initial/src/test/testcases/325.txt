@@ -1,1 +1,4 @@
-class A325 {}
+class a {
+            float a(){a[3+x.foo(2)] := a[b[2]] +3;}
+        }
+        

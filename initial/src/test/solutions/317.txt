@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(a),[AttributeDecl(Instance,VarDecl(Id(a),ArrayType(5,IntType),[IntLit(1),IntLit(2)]))])])
+Program([ClassDecl(Id("a"),[AttributeDecl(Instance(),VarDecl(Id("a"),ArrayType(5,IntType()),ArrayLiteral([IntLiteral(1),IntLiteral(2)])))],None)])

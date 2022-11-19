@@ -1,1 +1,4 @@
-class A330 {}
+class a {
+            int a = 4+3/3*3;
+        }
+        

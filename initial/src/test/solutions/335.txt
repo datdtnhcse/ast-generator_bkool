@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A335),[])])
+Program([ClassDecl(Id("a"),[MethodDecl(Instance(),Id("a"),[],FloatType(),Block([],[CallStmt(Id("s"),Id("Shape"),[])]))],None)])

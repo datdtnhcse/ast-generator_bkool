@@ -1,1 +1,6 @@
-class A327 {}
+class a {
+            float a () {
+                int a = new a();
+            }
+        }
+        

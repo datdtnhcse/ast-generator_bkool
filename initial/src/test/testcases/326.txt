@@ -1,1 +1,4 @@
-class A326 {}
+class a {
+            float b(int a) {x.b[2] := x.m()[3];}
+        }
+        
