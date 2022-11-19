@@ -23,9 +23,6 @@ member: atrbDecl | methodDecl;
 atrbDecl: immutDecl | mutDecl;
 mutDecl: STATIC? typ ID atrbInit? (CM ID atrbInit?)* SM;
 immutDecl: (FINAL | FINAL STATIC | STATIC FINAL) typ ID atrbInit (CM ID atrbInit)* SM;
-// atrbDecl: atrbType? atrb SM;
-// atrbType: FINAL | STATIC | FINAL STATIC | STATIC FINAL;
-// atrb: typ (atrbInit (CM atrbInit)*);
 atrbInit: EQQ exp;
 typ: priTyp | classTyp | VOID | arrayTyp;
 arrayTyp:  priTyp LS INTLIT RS;
@@ -71,9 +68,7 @@ literal: INTLIT | FLOATLIT | STRINGLIT | booleanLit;
 booleanLit: TRUE | FALSE;
 argLits: exp (CM exp)*;
 
-
 // 5.8.this
-
 
 // 5.9.operator precedence and associativity
 
@@ -90,11 +85,9 @@ stmt: blockStmt
 	| breakStmt
 	| continueStmt
 	| returnStmt
-	// | atrbDecl
 	| invokeStmt;
 
 // 6.1.block statement
-// blockStmt: LP (FINAL? atrb SM)* nullAbleStmtList? RP;
 blockStmt: LP nullAbleDeclList* stmt* RP;
 nullAbleDeclList: FINAL? typ ID atrbInit? (CM ID atrbInit?)* SM ;
 
@@ -205,7 +198,14 @@ INFL: INTLIT | FLOATLIT;
 
 // 3.7.4.string literal
 
-STRINGLIT:  '"' CHAR*	'"';
+STRINGLIT:'"' CHAR* '"' {
+	self.text = self.text.replace('\\b','\b')
+	self.text = self.text.replace('\\r','\r')
+	self.text = self.text.replace('\\f','\f')
+	self.text = self.text.replace('\\n','\n')
+	self.text = self.text.replace('\\\"','\"')
+	self.text = self.text.replace('\\\\','\\')
+};
 
 
 fragment CHAR: ESC | ~ [\r\n\\"];

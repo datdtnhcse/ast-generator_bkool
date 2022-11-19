@@ -1,1 +1,1 @@
-"abc \"def\"";58,<EOF>
+"abc "def"";58,<EOF>
