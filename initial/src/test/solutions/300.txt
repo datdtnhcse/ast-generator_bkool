@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(main),[])])
+successful

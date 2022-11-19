@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A319),[])])
+Program([ClassDecl(Id(a),[AttributeDecl(Instance,VarDecl(Id(a),IntType,BinaryOp(+,BinaryOp(*,IntLit(5),IntLit(7)),BinaryOp(\,IntLit(3),IntLit(3)))))])])

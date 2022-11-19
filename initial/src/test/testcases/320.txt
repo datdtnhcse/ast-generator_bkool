@@ -1,1 +1,7 @@
-class A320 {}
+class a {
+            string a_ () {
+                int a;
+                return a;
+            }
+        }
+        

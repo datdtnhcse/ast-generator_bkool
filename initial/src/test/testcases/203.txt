@@ -1,1 +1,1 @@
-class a{int main( {}}
+class a{int main() {}}

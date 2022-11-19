@@ -396,11 +396,15 @@ class ASTGenSuite(unittest.TestCase):
                                             [],
                                             [
                                                 Assign(
-                                                    FieldAccess(SelfLiteral(), Id("length")),
+                                                    FieldAccess(
+                                                        SelfLiteral(), Id("length")
+                                                    ),
                                                     Id("length"),
                                                 ),
                                                 Assign(
-                                                    FieldAccess(SelfLiteral(), Id("width")),
+                                                    FieldAccess(
+                                                        SelfLiteral(), Id("width")
+                                                    ),
                                                     Id("width"),
                                                 ),
                                             ],
@@ -431,51 +435,345 @@ class ASTGenSuite(unittest.TestCase):
         )
 
     def test_315(self):
-        input = "class A315 {}"
+        input = """class Rectangle extends Shape {
+            float getArea(){
+                return this.length*this.width;
+            }
+        }
+        class Triangle extends Shape {
+            float getArea(){
+            return this.length*this.width / 2;
+            }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A315"), [], None)])), 315)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("Rectangle"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("getArea"),
+                                        [],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                Return(
+                                                    BinaryOp(
+                                                        "*",
+                                                        FieldAccess(
+                                                            SelfLiteral(), Id("length")
+                                                        ),
+                                                        FieldAccess(
+                                                            SelfLiteral(), Id("width")
+                                                        ),
+                                                    )
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                                Id("Shape"),
+                            ),
+                            ClassDecl(
+                                Id("Triangle"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("getArea"),
+                                        [],
+                                        FloatType(),
+                                        Block(
+                                            [],
+                                            [
+                                                Return(
+                                                    BinaryOp(
+                                                        "\\",
+                                                        BinaryOp(
+                                                            "*",
+                                                            FieldAccess(
+                                                                SelfLiteral(),
+                                                                Id("length"),
+                                                            ),
+                                                            FieldAccess(
+                                                                SelfLiteral(),
+                                                                Id("width"),
+                                                            ),
+                                                        ),
+                                                        IntLiteral(2),
+                                                    )
+                                                )
+                                            ],
+                                        ),
+                                    )
+                                ],
+                                Id("Shape"),
+                            ),
+                        ]
+                    )
+                ),
+                315,
+            )
         )
 
     def test_316(self):
-        input = "class A316 {}"
+        input = """class Example2 {
+            void main() {
+                Shape s;
+                s := new Rectangle(3,4);
+                io.writeFloatLn(s.getArea());
+                s := new Triangle(3,4);
+                io.writeFloatLn(s.getArea());
+            }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A316"), [], None)])), 316)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("Example2"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("main"),
+                                        [],
+                                        VoidType(),
+                                        Block(
+                                            [
+                                                VarDecl(
+                                                    Id("s"),
+                                                    ClassType(Id("Shape")),
+                                                )
+                                            ],
+                                            [
+                                                Assign(
+                                                    Id("s"),
+                                                    NewExpr(
+                                                        Id("Rectangle"),
+                                                        [IntLiteral(3), IntLiteral(4)],
+                                                    ),
+                                                ),
+                                                CallStmt(
+                                                    Id("io"),
+                                                    Id("writeFloatLn"),
+                                                    [
+                                                        CallExpr(
+                                                            Id("s"), Id("getArea"), []
+                                                        )
+                                                    ],
+                                                ),
+                                                Assign(
+                                                    Id("s"),
+                                                    NewExpr(
+                                                        Id("Triangle"),
+                                                        [IntLiteral(3), IntLiteral(4)],
+                                                    ),
+                                                ),
+                                                CallStmt(
+                                                    Id("io"),
+                                                    Id("writeFloatLn"),
+                                                    [
+                                                        CallExpr(
+                                                            Id("s"), Id("getArea"), []
+                                                        )
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                316,
+            )
         )
 
     def test_317(self):
-        input = "class A317 {}"
+        input = """class a {
+            int[5] a = {1,2};
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A317"), [], None)])), 317)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            ArrayType(5, IntType()),
+                                            ArrayLiteral(
+                                                [IntLiteral(1), IntLiteral(2)]
+                                            ),
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                317,
+            )
         )
 
     def test_318(self):
-        input = "class A318 {}"
+        input = """class a {
+            int a = {1,2};
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A318"), [], None)])), 318)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            IntType(),
+                                            ArrayLiteral(
+                                                [IntLiteral(1), IntLiteral(2)]
+                                            ),
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                318,
+            )
         )
 
     def test_319(self):
-        input = "class A319 {}"
+        input = """class a {
+            int a = 5*7+3/3;
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A319"), [], None)])), 319)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(
+                                            Id("a"),
+                                            IntType(),
+                                            BinaryOp(
+                                                "+",
+                                                BinaryOp(
+                                                    "*", IntLiteral(5), IntLiteral(7)
+                                                ),
+                                                BinaryOp(
+                                                    "\\", IntLiteral(3), IntLiteral(3)
+                                                ),
+                                            ),
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                319,
+            )
         )
 
     def test_320(self):
-        input = "class A320 {}"
+        input = """class a {
+            string a_ () {
+                int a;
+                return a;
+            }
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A320"), [], None)])), 320)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    MethodDecl(
+                                        Instance(),
+                                        Id("a_"),
+                                        [],
+                                        StringType(),
+                                        Block(
+                                            [VarDecl(Id("a"), IntType())],
+                                            [Return(Id("a"))],
+                                        ),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                320,
+            )
         )
 
     def test_321(self):
-        input = "class A321 {}"
+        input = """class a {
+            # du thanh dat
+            /*du thanh dat */
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A321"), [], None)])), 321)
+            TestAST.test(input, str(Program([ClassDecl(Id("a"), [])])), 321)
         )
 
     def test_322(self):
-        input = "class A322 {}"
+        input = """class a {
+            float a = 12.3e3;
+        }
+        """
         self.assertTrue(
-            TestAST.test(input, str(Program([ClassDecl(Id("A322"), [], None)])), 322)
+            TestAST.test(
+                input,
+                str(
+                    Program(
+                        [
+                            ClassDecl(
+                                Id("a"),
+                                [
+                                    AttributeDecl(
+                                        Instance(),
+                                        VarDecl(Id("a"), FloatType(), FloatLiteral(12.3e3)),
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ),
+                322,
+            )
         )
 
     def test_323(self):

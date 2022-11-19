@@ -1,1 +1,4 @@
-class A317 {}
+class a {
+            int[5] a = {1,2};
+        }
+        

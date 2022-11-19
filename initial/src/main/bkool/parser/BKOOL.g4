@@ -22,7 +22,7 @@ member: atrbDecl | methodDecl;
 
 atrbDecl: immutDecl | mutDecl;
 mutDecl: STATIC? typ ID atrbInit? (CM ID atrbInit?)* SM;
-immutDecl: (FINAL | FINAL STATIC | STATIC FINAL)? typ ID atrbInit (CM ID atrbInit)* SM;
+immutDecl: (FINAL | FINAL STATIC | STATIC FINAL) typ ID atrbInit (CM ID atrbInit)* SM;
 // atrbDecl: atrbType? atrb SM;
 // atrbType: FINAL | STATIC | FINAL STATIC | STATIC FINAL;
 // atrb: typ (atrbInit (CM atrbInit)*);
@@ -90,13 +90,13 @@ stmt: blockStmt
 	| breakStmt
 	| continueStmt
 	| returnStmt
-	| atrbDecl
+	// | atrbDecl
 	| invokeStmt;
 
 // 6.1.block statement
 // blockStmt: LP (FINAL? atrb SM)* nullAbleStmtList? RP;
 blockStmt: LP nullAbleDeclList* stmt* RP;
-nullAbleDeclList: FINAL? typ ID atrbInit (CM ID atrbInit)* SM ;
+nullAbleDeclList: FINAL? typ ID atrbInit? (CM ID atrbInit?)* SM ;
 
 // 6.2.assignment statement
 asmStmt: lhs ASSIGN exp SM;

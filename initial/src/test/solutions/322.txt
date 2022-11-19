@@ -1,1 +1,1 @@
-Program([ClassDecl(Id(A322),[])])
+Program([ClassDecl(Id(a),[AttributeDecl(Instance,VarDecl(Id(a),FloatType,FloatLit(12300.0)))])])

@@ -1,1 +1,5 @@
-class A321 {}
+class a {
+            # du thanh dat
+            /*du thanh dat */
+        }
+        

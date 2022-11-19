@@ -1,1 +1,4 @@
-class A318 {}
+class a {
+            int a = {1,2};
+        }
+        

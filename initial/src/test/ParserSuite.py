@@ -20,7 +20,7 @@ class ParserSuite(unittest.TestCase):
     def test3(self):
         """Miss ) int main( {}"""
         input = """class a{int main() {}}"""
-        expect = "Error on line 1 col 18: {"
+        expect = "successful"
         self.assertTrue(TestParser.test(input,expect,203))
 
     def test4(self):
