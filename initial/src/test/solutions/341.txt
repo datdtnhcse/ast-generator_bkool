@@ -1,1 +1,1 @@
-Program([ClassDecl(Id("A314"),[AttributeDecl(Instance(),VarDecl(Id("a"),IntType(),None)),AttributeDecl(Instance(),VarDecl(Id("b"),IntType(),None)),AttributeDecl(Instance(),VarDecl(Id("c"),FloatType(),None)),MethodDecl(Instance(),Id("method2"),[],ArrayType(4,ClassType(Id("arr"))),Block([],[]))],None)])
+Program([ClassDecl(Id("A341"),[],None)])

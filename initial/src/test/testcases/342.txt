@@ -1,6 +1,1 @@
-class A315 {
-            static final boolean a = true;
-            int foo1(boolean[10] foo4) {}
-            boolean[3] foo2(C[10] k) {}
-            C[10] foo3(B[2] x; int size) {}
-         }
+class A342 {}
