@@ -1,0 +1,8 @@
+class A {
+            int main() {
+                for i := a to b do
+                    a := a + i;
+                for n := c downto d do
+                    c := c - n;
+            }
+        }

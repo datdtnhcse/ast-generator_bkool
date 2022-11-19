@@ -111,8 +111,9 @@ class ASTGeneration(BKOOLVisitor):
         return ClassType(Id(ctx.ID().getText()))
 
     def visitArrayTyp(self, ctx: BKOOLParser.ArrayTypContext):
-        # arrayTyp:  priTyp LS INTLIT RS;
-        return ArrayType(int(ctx.INTLIT().getText()), ctx.priTyp().accept(self))
+        # arrayTyp:  (priTyp | classTyp) LS INTLIT RS;
+        return ArrayType(int(ctx.INTLIT().getText()), 
+                         ctx.priTyp().accept(self) if ctx.priTyp() else ctx.classTyp().accept(self))
 
     def visitPriTyp(self, ctx: BKOOLParser.PriTypContext):
         # priTyp: INT | FLOAT | STRING | BOOLEAN;
@@ -269,7 +270,7 @@ class ASTGeneration(BKOOLVisitor):
     def visitNotee(self, ctx: BKOOLParser.NoteeContext):
         # notee: (NOT) notee | subAddee;
         if ctx.getChildCount() == 2:
-            return UnaruOp("!", ctx.notee().accept(self))
+            return UnaryOp("!", ctx.notee().accept(self))
         else:
             return ctx.subAddee().accept(self)
 

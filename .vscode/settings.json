@@ -1,0 +1,13 @@
+{
+    "python.analysis.extraPaths": [
+        "./initial/src/test/",
+        "./initial/src/main/bkool/parser/",
+        "./initial/target",
+        "./initial/src/main/bkool/utils/",
+        "./initial/src/main/bkool/astgen/",
+        "./initial/src/main/bkool/checker/",
+        "./initial/src/main/bkool/codegen/",
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "python.formatting.provider": "black"
+}

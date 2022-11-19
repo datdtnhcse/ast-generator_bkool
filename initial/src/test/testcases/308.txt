@@ -1,5 +1,4 @@
 class A308 {
             int me(int a) {
-
             }
         }

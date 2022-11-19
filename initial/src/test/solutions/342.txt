@@ -1,1 +1,1 @@
-Program([ClassDecl(Id("A342"),[],None)])
+Program([ClassDecl(Id("A315"),[AttributeDecl(Static(),ConstDecl(Id("a"),BoolType(),BooleanLiteral(True))),MethodDecl(Instance(),Id("foo1"),[VarDecl(Id("foo4"),ArrayType(10,BoolType()),None)],IntType(),Block([],[])),MethodDecl(Instance(),Id("foo2"),[VarDecl(Id("k"),ArrayType(10,ClassType(Id("C"))),None)],ArrayType(3,BoolType()),Block([],[])),MethodDecl(Instance(),Id("foo3"),[VarDecl(Id("x"),ArrayType(2,ClassType(Id("B"))),None),VarDecl(Id("size"),IntType(),None)],ArrayType(10,ClassType(Id("C"))),Block([],[]))],None)])

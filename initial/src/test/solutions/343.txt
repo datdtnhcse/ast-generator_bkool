@@ -1,1 +1,1 @@
-Program([ClassDecl(Id("A343"),[],None)])
+Program([ClassDecl(Id("A324"),[AttributeDecl(Instance(),ConstDecl(Id("a"),ArrayType(10,ClassType(Id("A"))),ArrayCell(CallExpr(CallExpr(Id("a"),Id("a"),[]),Id("a"),[]),IntLiteral(10)))),AttributeDecl(Instance(),ConstDecl(Id("b"),ArrayType(10,ClassType(Id("A"))),CallExpr(Id("a"),Id("a"),[IntLiteral(10)])))],None)])

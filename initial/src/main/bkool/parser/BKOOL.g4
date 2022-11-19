@@ -25,7 +25,7 @@ mutDecl: STATIC? typ ID atrbInit? (CM ID atrbInit?)* SM;
 immutDecl: (FINAL | FINAL STATIC | STATIC FINAL) typ ID atrbInit (CM ID atrbInit)* SM;
 atrbInit: EQQ exp;
 typ: priTyp | classTyp | VOID | arrayTyp;
-arrayTyp:  priTyp LS INTLIT RS;
+arrayTyp:  (priTyp | classTyp) LS INTLIT RS;
 priTyp: INT | FLOAT | STRING | BOOLEAN;
 classTyp: ID;
 

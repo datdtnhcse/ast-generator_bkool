@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "test",
+            "type": "python",
+            "cwd": "${workspaceFolder}/initial/src",
+            "request": "launch",
+            "program": "${workspaceFolder}/initial/src/run.py",
+            "args": [
+                "test",
+                "ASTGenSuite"
+            ]
+        }
+    ]
+}

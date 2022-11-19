@@ -39,11 +39,6 @@ class BKOOLVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKOOLParser#idList.
-    def visitIdList(self, ctx:BKOOLParser.IdListContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by BKOOLParser#atrbInit.
     def visitAtrbInit(self, ctx:BKOOLParser.AtrbInitContext):
         return self.visitChildren(ctx)

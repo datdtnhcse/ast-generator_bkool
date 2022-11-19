@@ -1,1 +1,6 @@
-class A341 {}
+class A314 {
+            int a,b; float c;
+            arr[4] method2(){
+
+            }
+        }
