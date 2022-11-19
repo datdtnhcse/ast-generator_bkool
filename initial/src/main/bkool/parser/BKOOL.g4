@@ -22,13 +22,12 @@ member: atrbDecl | methodDecl;
 
 atrbDecl: immutDecl | mutDecl;
 mutDecl: STATIC? typ ID atrbInit? (CM ID atrbInit?)* SM;
-immutDecl: (FINAL | FINAL STATIC | STATIC FINAL)? typ (idList atrbInit (CM idList atrbInit)*) SM;
-idList: ID (CM ID)*;
+immutDecl: (FINAL | FINAL STATIC | STATIC FINAL)? typ ID atrbInit (CM ID atrbInit)* SM;
 // atrbDecl: atrbType? atrb SM;
 // atrbType: FINAL | STATIC | FINAL STATIC | STATIC FINAL;
 // atrb: typ (atrbInit (CM atrbInit)*);
 atrbInit: EQQ exp;
-typ: INT | FLOAT | STRING | BOOLEAN | classTyp | VOID | arrayTyp;
+typ: priTyp | classTyp | VOID | arrayTyp;
 arrayTyp:  priTyp LS INTLIT RS;
 priTyp: INT | FLOAT | STRING | BOOLEAN;
 classTyp: ID;

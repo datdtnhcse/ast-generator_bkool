@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod, ABCMeta
 from Visitor import Visitor
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 
 class AST(ABC):
@@ -143,7 +143,7 @@ class Assign(Stmt):
 class If(Stmt):
     expr:Expr
     thenStmt:Stmt
-    elseStmt:Stmt = None # None if there is no else branch
+    elseStmt:Optional[Stmt] = None # None if there is no else branch
     def __str__(self):
         return "If(" + str(self.expr) + "," + str(self.thenStmt) + (("," +  str(self.elseStmt)) if self.elseStmt else "")  + ")"
 
@@ -184,7 +184,7 @@ class CallStmt(Stmt):
 class VarDecl(StoreDecl):
     variable : Id
     varType : Type
-    varInit : Expr = None # None if there is no initial
+    varInit : Optional[Expr] = None # None if there is no initial
     def __str__(self):
         return "VarDecl(" + str(self.variable) + "," + str(self.varType) + (","+ str(self.varInit) if self.varInit else "") + ")"
     def toParam(self):
@@ -203,7 +203,7 @@ class Block(Stmt):
 class ConstDecl(StoreDecl):
     constant : Id
     constType : Type
-    value : Expr
+    value : Optional[Expr] 
     def __str__(self):
         return "ConstDecl(" + str(self.constant) + "," + str(self.constType) + "," + str(self.value) + ")"
 
@@ -213,7 +213,7 @@ class ConstDecl(StoreDecl):
 class ClassDecl(Decl):
     classname : Id
     memlist : List[MemDecl]
-    parentname : Id = None # None if there is no parent
+    parentname : Optional[Id] = None # None if there is no parent
     def __str__(self):
         return "ClassDecl(" + str(self.classname) + (("," + str(self.parentname)) if self.parentname else "") + ",[" + ','.join(str(i) for i in self.memlist) + "])"
 
@@ -239,7 +239,7 @@ class MethodDecl(MemDecl):
     kind: SIKind
     name: Id
     param: List[VarDecl]
-    returnType: Type  # None for constructor
+    returnType: Optional[Type]  # None for constructor
     body: Block
     def __str__(self):
         return "MethodDecl(" + str(self.name) + ',' + str(self.kind) + ",[" +  ','.join(i.toParam() for i in self.param) + "]," + ((str(self.returnType) + ",") if self.returnType else "") + str(self.body) + ")"

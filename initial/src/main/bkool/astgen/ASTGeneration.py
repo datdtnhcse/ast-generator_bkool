@@ -6,50 +6,70 @@ class ASTGeneration(BKOOLVisitor):
 
     def visitProgram(self, ctx:BKOOLParser.ProgramContext):
         # program: classDecl* EOF;
-        return Program([self.visit(x) for x in ctx.ClassDecl()])
+        return Program([self.visit(x) for x in ctx.classDecl()])
 
     def visitClassDecl(self, ctx:BKOOLParser.ClassDeclContext):
         # classDecl: CLASS ID (EXTENDS ID)? LP member* RP;
-        return ClassDecl(ctx.ID(0).getText(), 
-                        [self.visit(x) for x in ctx.member], 
-                        ID(ctx.ID(1).getText()) if ctx.EXTENDS() else None)
+        return ClassDecl(Id(ctx.ID(0).getText()), 
+                        [self.visit(x) for x in ctx.member()], 
+                        Id(ctx.ID(1).getText()) if ctx.EXTENDS() else None)  # type: ignore
 
     def visitMember(self, ctx:BKOOLParser.MemberContext):
         # member: atrbDecl | methodDecl;
         if ctx.atrbDecl():
-            return ctx.atrbDecl().accept(self)
-        else: 
-            return ctx.methodDecl().accept(self)
+            return ctx.atrbDecl().accept(self) # type:ignore
+        else:
+            return ctx.methodDecl().accept(self) # type:ignore
+       
 
     def visitAtrbDecl(self, ctx:BKOOLParser.AtrbDeclContext):
         # atrbDecl: immutDecl | mutDecl;
-        if ctx.imuDecl():
-            return ctx.imuDecl().accept(self)
+        if ctx.immutDecl():
+            return ctx.immutDecl().accept(self) # type:ignore
         else: 
-            return ctx.mutDecl().accept(self)
+            return ctx.mutDecl().accept(self) # type:ignore
 
     def visitMutDecl(self, ctx:BKOOLParser.MutDeclContext):
         # mutDecl: STATIC? typ ID atrbInit (CM ID atrbInit)* SM;
         kind = Static() if ctx.STATIC() else Instance()
         result = ''
         result += str(AttributeDecl(kind, 
-                                    VarDecl(ID(ctx.ID(0).getText()), 
-                                            ctx.typ().accept(self), 
+                                    VarDecl(Id(ctx.ID(0).getText()), # type:ignore
+                                            ctx.typ().accept(self), # type:ignore
                                             ctx.atrbInit(0).accept(self) if ctx.atrbInit(0) else None)))
                                 
         if ctx.CM(): 
-            size = len(ctx.CM()) 
+            size = len(ctx.CM()) # type:ignore
             for i in range(1, size + 1):
                 result += ',' + str(AttributeDecl(kind, 
-                                                  VarDecl(ID(ctx.ID(i).getText()), 
+                                                  VarDecl(Id(ctx.ID(i).getText()),  # type:ignore
                                                           ctx.typ().accept(self), 
                                                           ctx.atrbInit(i).accept(self) if ctx.atrbInit(i) else None)))
         
         return result
 
+    def visitImmutDecl(self, ctx:BKOOLParser.ImmutDeclContext):
+        # immutDecl: (FINAL | FINAL STATIC | STATIC FINAL)? typ ID atrbInit (CM ID atrbInit)* SM;
+        kind = Static() if ctx.STATIC() else Instance()
+        result = ""
+        result += str(AttributeDecl(kind, 
+                                    ConstDecl(Id(ctx.ID(0).getText()), 
+                                              ctx.typ().accept(self), 
+                                              ctx.atrbInit(0).accept(self))))
+
+        if ctx.CM():
+            size = len(ctx.CM())
+            for i in range(1, size+1):
+                result += ',' + str(AttributeDecl(kind, 
+                                                  ConstDecl(Id(ctx.ID(i).getText()), 
+                                                            ctx.typ().accept(self), 
+                                                            ctx.atrbInit(i).accept(self))))
+        return result
+
+
     def visitAtrbInit(self, ctx:BKOOLParser.AtrbInitContext):
         # atrbInit: (EQQ exp)?;
-        return ctx.exp().accept(self)
+        return ctx.exp().accept(self) if ctx.exp() else None
 
     def visitTyp(self, ctx:BKOOLParser.TypContext):
         # typ: priTyp | classTyp | VOID | arrayTyp;
@@ -64,14 +84,14 @@ class ASTGeneration(BKOOLVisitor):
 
     def visitClassTyp(self, ctx:BKOOLParser.ClassTypContext):
         # classTyp: ID;
-        return ClassType(ID(ctx.ID().getText()))
+        return ClassType(Id(ctx.ID().getText()))
 
-    def arrayTyp(self, ctx:BKOOLParser.ArrayTypContext):
+    def visitArrayTyp(self, ctx:BKOOLParser.ArrayTypContext):
         # arrayTyp:  priTyp LS INTLIT RS;
         return ArrayType(size(ctx.INTLIT().getText()),
                          ctx.priTyp().accept(self))
 
-    def priTyp(self, ctx:BKOOLParser.PriTypContext):
+    def visitPriTyp(self, ctx:BKOOLParser.PriTypContext):
         # priTyp: INT | FLOAT | STRING | BOOLEAN;
         if ctx.INT():
             return IntType()
@@ -87,36 +107,35 @@ class ASTGeneration(BKOOLVisitor):
         kind = Static() if ctx.STATIC() else Instance()
     
         return MethodDecl(kind, 
-                          ID(ctx.ID().getText()),
-                          ctx.paraList().accept(self),
+                          Id(ctx.ID().getText()),
+                          ctx.paraList().accept(self) if ctx.paraList() else [],
                           ctx.typ().accept(self) if ctx.typ() else None,
                           ctx.blockStmt().accept(self)) # maybe fail
 
     def visitParaList(self, ctx:BKOOLParser.ParaListContext):
-        # paraList: para ID (SM para)*;
-        result = ''
-        result += str(ctx.para().accept(self))
+        # paraList: para (SM para)*;
+        result = []
+        result += ctx.para(0).accept(self)
 
         if ctx.SM(): 
             size = len(ctx.SM()) 
             for i in range(1, size + 1):
-                result += ',' + str(ctx.para().accept(self))
+                result += ctx.para(i).accept(self)
 
         return result
 
     def visitPara(self, ctx:BKOOLParser.ParaContext):
         # para: typ ID (CM ID)*; 
-        result = ''
-        result += str(VarDecl(ctx.ID().accept(self),
-                              ctx.typ().accept(self),
-                              None))
+        result = []
+        result += [VarDecl(Id(ctx.ID(0).getText()),
+                           ctx.typ().accept(self))]
         
         if ctx.CM():
             size = len(ctx.CM())
             for i in range(1, size + 1):
-                result += str(VarDecl(ctx.ID().accept(self),
-                              ctx.typ().accept(self),
-                              None))
+                result += [VarDecl(Id(ctx.ID(i).getText()),
+                           ctx.typ().accept(self))]
+        return result
 
     def visitArrayLit(self, ctx:BKOOLParser.ArrayLitContext):
         # arrayLit: LP literal (CM literal)* RP;   
@@ -154,14 +173,14 @@ class ASTGeneration(BKOOLVisitor):
                                 ctx.equalee(1).accept(self))
             if ctx.GREATER():
                 return BinaryOp(">",
-                                ctx.equalee(0).accept(self),
-                                ctx.equalee(1).accept(self))
+                                ctx.equalee(0).accept(self),  
+                                ctx.equalee(1).accept(self))  
             if ctx.GEQ():
                 return BinaryOp(">=",
                                 ctx.equalee(0).accept(self),
                                 ctx.equalee(1).accept(self))
         else:   
-            return ctx.equalee().accept(self)
+            return ctx.equalee(0).accept(self)
 
     def visitEqualee(self, ctx:BKOOLParser.EqualeeContext):
         # equalee: andOree (EQ | NEQ) andOree | andOree;
@@ -170,14 +189,14 @@ class ASTGeneration(BKOOLVisitor):
                             ctx.andOree(0).accept(self),
                             ctx.andOree(1).accept(self))
         else:
-            return ctx.andOree().accept(self)
+            return ctx.andOree(0).accept(self)
 
     def visitAndOree(self, ctx:BKOOLParser.AndOreeContext):
         # andOree: addSubee (AND | OR) andOree | addSubee;
         if ctx.getChildCount() == 3:
             return BinaryOp("&&" if ctx.AND() else "!=",
-                            ctx.addSubee().accept(ctx),
-                            ctx.andOree().accept(ctx))
+                            ctx.addSubee().accept(self),
+                            ctx.andOree().accept(self))
         else:   
             return ctx.addSubee().accept(self)
 
@@ -185,8 +204,8 @@ class ASTGeneration(BKOOLVisitor):
         # addSubee: addSubee (ADD | SUB) mulDivModee | mulDivModee;
         if ctx.getChildCount() == 3:
             return BinaryOp("+" if ctx.ADD() else "-",
-                            ctx.addSubee().accept(ctx),
-                            ctx.mulDivModee().accept(ctx))
+                            ctx.addSubee().accept(self),
+                            ctx.mulDivModee().accept(self))
         else:   
             return ctx.mulDivModee().accept(self)
 
@@ -234,7 +253,8 @@ class ASTGeneration(BKOOLVisitor):
         if ctx.getChildCount() == 2:
             return UnaryOp("+" if ctx.ADD() else "-",
                            ctx.subAddee().accept(self))
-        return ctx.indexee.accept(self)
+        else:
+            return ctx.indexee().accept(self)
 
     def visitIndexee(self, ctx:BKOOLParser.IndexeeContext):
         # indexee: memAccessee LS exp RS | memAccessee;
@@ -247,21 +267,21 @@ class ASTGeneration(BKOOLVisitor):
     def visitMemAccessee(self, ctx:BKOOLParser.MemAccesseeContext):
         # memAccessee: memAccessee DOT ID | memAccessee DOT ID LB argLits? RB | atom;
         if ctx.getChildCount() == 3:
-            return fieldAccess(ctx.memAccessee().accept(self),
-                               ID(ctx.ID().getText()))
+            return FieldAccess(ctx.memAccessee().accept(self),
+                               Id(ctx.ID().getText()))
         elif ctx.getChildCount() == 1:
             return ctx.atom().accept(self)
         else:
             return CallExpr(ctx.memAccessee().accept(self),
-                            ID(ctx.ID().getText()),
-                            ctx.argLits().accept(self)) # argLit not been supported yet
+                            Id(ctx.ID().getText()),
+                            ctx.argLits().accept(self)) 
 
     def visitAtom(self, ctx:BKOOLParser.AtomContext):
         # atom: THIS | ID | literal | newee | arrayLit;
         if ctx.THIS():
             return SelfLiteral()
         elif ctx.ID():
-            return ID(ctx.ID().getText())
+            return Id(ctx.ID().getText())
         elif ctx.literal():
             return ctx.literal().accept(self)
         elif ctx.newee():
@@ -271,7 +291,7 @@ class ASTGeneration(BKOOLVisitor):
     
     def visitNewee(self, ctx:BKOOLParser.NeweeContext):
         # newee: NEW ID LB argLits? RB;
-        return NewExpr(ID(ctx.ID().getText()),
+        return NewExpr(Id(ctx.ID().getText()),
                        ctx.argLits().accept(self) if ctx.argLits() else [])
         
     def visitBooleanLit(self, ctx:BKOOLParser.BooleanLitContext): 
@@ -286,7 +306,7 @@ class ASTGeneration(BKOOLVisitor):
             size = len(ctx.CM())
             for i in range(1, size + 1):
                 result.append(ctx.exp(i).accept(self))
-            return result
+        return result
     
     def visitStmt(self, ctx:BKOOLParser.StmtContext):
         # stmt: blockStmt | asmStmt | ifStmt | forStmt | breakStmt | continueStmt | returnStmt | atrbDecl | invokeStmt;
@@ -318,23 +338,23 @@ class ASTGeneration(BKOOLVisitor):
         # nullAbleDeclList: FINAL? typ ID atrbInit (CM ID atrbInit)* SM;
         result = []
         if ctx.FINAL():
-            result.append(ConstDecl(ID(ctx.ID(i).getText()),
+            result.append(ConstDecl(Id(ctx.ID(i).getText()),
                                         ctx.typ().accept(self),
                                         ctx.atrbInit().accept(self)))
             if ctx.CM():
                 size = len(ctx.CM())
                 for i in range (1, size + 1):
-                    result.append(ConstDecl(ID(ctx.ID(i).getText()),
+                    result.append(ConstDecl(Id(ctx.ID(i).getText()),
                                             ctx.typ().accept(self),
                                             ctx.atrbInit().accept(self)))
         else:
-            result.append(VarDecl(ID(ctx.ID(i).getText()),
+            result.append(VarDecl(Id(ctx.ID(i).getText()),
                                   ctx.typ().accept(self),
                                   ctx.atrbInit().accept(self)))
             if ctx.CM():
                 size = len(ctx.CM())
                 for i in range (1, size + 1):
-                    result.append(VarDecl(ID(ctx.ID(i).getText()),
+                    result.append(VarDecl(Id(ctx.ID(i).getText()),
                                           ctx.typ().accept(self),
                                           ctx.atrbInit().accept(self)))
 
@@ -347,7 +367,7 @@ class ASTGeneration(BKOOLVisitor):
         # lhs: indexee | memAccessee DOT ID | ID;
         if ctx.getChildCount() == 3:
             return fieldAccess(ctx.memAccessee().accept(self),
-                               ID(ctx.ID().getText()))
+                               Id(ctx.ID().getText()))
         elif ctx.ID():
             return Id(ctx.ID().getText())
         else:
@@ -383,11 +403,11 @@ class ASTGeneration(BKOOLVisitor):
         # invokeStmt: memAccessee DOT ID LB argLits? RB SM;
         if ctx.argLits():
             return CallStmt(ctx.memAccessee().accept(self),
-                            ctx.ID().accept(self),
+                            Id(ctx.ID().getText()),
                             ctx.argLits().accept(self))
         else: 
             return FieldAcess(ctx.memAccessee().accept(self),
-                              ctx.ID().accept(self))
+                              Id(ctx.ID().getText()))
 
 
 # argLits: exp (CM exp)*;

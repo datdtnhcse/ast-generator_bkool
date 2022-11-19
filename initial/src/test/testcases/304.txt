@@ -1,0 +1,3 @@
+class A304 {
+            final static int a = 10;    
+        }

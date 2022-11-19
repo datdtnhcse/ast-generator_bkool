@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(A308),[MethodDecl(Id(me),Instance,[param(Id(a),IntType)],IntType,Block([],[]))])])

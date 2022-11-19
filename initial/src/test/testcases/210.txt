@@ -1,0 +1,4 @@
+class a {
+            int foo(){a.foo(b);}
+        }
+        

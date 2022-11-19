@@ -1,0 +1,4 @@
+class a {
+           float b(int b) {x.b[2] := x.m()[3];}
+        }
+        

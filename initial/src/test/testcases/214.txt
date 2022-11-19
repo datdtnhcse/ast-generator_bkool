@@ -1,0 +1,7 @@
+class a {
+            string a_ () {
+                int a;
+                return a;
+            }
+        }
+        

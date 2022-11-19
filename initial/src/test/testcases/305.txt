@@ -1,0 +1,3 @@
+class A305 {
+            final int a, b, c = 10;
+        }

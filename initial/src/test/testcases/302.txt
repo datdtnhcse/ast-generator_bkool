@@ -1,4 +1,3 @@
-class main {
-            a:integer;
-            b:integer;
+class A302 {
+            static int a;
         }

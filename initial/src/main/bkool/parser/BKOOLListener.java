@@ -67,16 +67,6 @@ public interface BKOOLListener extends ParseTreeListener {
 	 */
 	void exitImmutDecl(BKOOLParser.ImmutDeclContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BKOOLParser#idList}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdList(BKOOLParser.IdListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKOOLParser#idList}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdList(BKOOLParser.IdListContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link BKOOLParser#atrbInit}.
 	 * @param ctx the parse tree
 	 */

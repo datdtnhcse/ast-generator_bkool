@@ -1,0 +1,8 @@
+class a {
+            void foo(int a; float b) {
+                int[5] a;
+                int[4] b;
+                b[5]:=5;
+            }
+        }
+        

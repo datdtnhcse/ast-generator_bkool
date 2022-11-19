@@ -87,18 +87,6 @@ public class BKOOLBaseListener implements BKOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIdList(BKOOLParser.IdListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIdList(BKOOLParser.IdListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterAtrbInit(BKOOLParser.AtrbInitContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -1,0 +1,4 @@
+class a {
+            final int a = 5;
+        }
+        

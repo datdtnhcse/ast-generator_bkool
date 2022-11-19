@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(A302),[AttributeDecl(Static,VarDecl(Id(a),IntType))])])

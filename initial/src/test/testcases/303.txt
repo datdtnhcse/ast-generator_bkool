@@ -1,0 +1,3 @@
+class A303 {
+            static final int a;
+        }

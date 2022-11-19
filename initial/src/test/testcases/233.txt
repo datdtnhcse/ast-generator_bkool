@@ -1,0 +1,4 @@
+class a {
+           float a(int a; string b) {}
+        }
+        

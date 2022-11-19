@@ -1,0 +1,6 @@
+class a {
+            float a () {
+                int a = new a();
+            }
+        }
+        

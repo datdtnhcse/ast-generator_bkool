@@ -1,0 +1,4 @@
+class a {
+            float a = 12.3e3;
+        }
+        

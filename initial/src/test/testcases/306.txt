@@ -1,0 +1,3 @@
+class A306 {
+            final int a = 10, b, c = 4;
+        }

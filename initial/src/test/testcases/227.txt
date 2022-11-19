@@ -1,0 +1,6 @@
+class a {
+           float a() {
+            if TRUE then a := 2; else for a:=2 to 3 do a:=2;
+           }
+        }
+        

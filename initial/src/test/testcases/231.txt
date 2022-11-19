@@ -1,0 +1,6 @@
+class a {
+           float a() {
+                s.Shape();
+           }
+        }
+        
